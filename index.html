@@ -3,1191 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>😶 Clicker Ultimate - Mobile</title>
+    <title>😶 Clicker Ultimate</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        body {
-            font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(160deg, #0b0817 0%, #13102b 40%, #1c1840 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            touch-action: manipulation;
-            overflow-x: hidden;
-        }
-        .particles-bg {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: floatUp linear infinite;
-            opacity: 0;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(105vh) scale(0); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.15; }
-            100% { transform: translateY(-5vh) scale(1.2); opacity: 0; }
-        }
-        .game-container {
-            position: relative;
-            z-index: 1;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px 14px 16px;
-            width: 100%;
-            max-width: 420px;
-            max-height: 95vh;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 60px rgba(140,100,255,0.12);
-        }
-        .top-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .skin-settings-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .skin-button,
-        .settings-button {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            color: #fff;
-        }
-        .skin-button:active,
-        .settings-button:active {
-            background: rgba(255,215,0,0.2);
-            transform: scale(0.9);
-        }
-        .prestige-bar {
-            flex: 1;
-            margin-left: 10px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 20px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            padding: 0 8px;
-            gap: 6px;
-            border: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.7rem;
-            color: #fff;
-        }
-        .prestige-fill {
-            height: 6px;
-            background: linear-gradient(90deg, #ffd700, #ff8c00);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        .prestige-text {
-            white-space: nowrap;
-            font-weight: 600;
-        }
-        .prestige-btn {
-            background: #ff8c00;
-            border: none;
-            border-radius: 14px;
-            padding: 4px 10px;
-            font-weight: 700;
-            font-size: 0.7rem;
-            color: #fff;
-            cursor: pointer;
-            margin-left: 4px;
-            white-space: nowrap;
-        }
-        .prestige-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            background: #555;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-content {
-            background: rgba(20,20,45,0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0;
-            width: 92%;
-            max-width: 420px;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            color: #fff;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 16px 10px;
-            position: sticky;
-            top: 0;
-            background: rgba(20,20,45,0.95);
-            backdrop-filter: blur(20px);
-            z-index: 2;
-            border-radius: 24px 24px 0 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        .modal-close {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: rgba(255,255,255,0.8);
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 10px;
-            transition: background 0.2s;
-            line-height: 1;
-        }
-        .modal-close:active {
-            background: rgba(255,255,255,0.25);
-        }
-        .modal-body {
-            padding: 16px;
-            overflow-y: auto;
-            flex: 1;
-        }
-        .skin-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .skin-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 14px 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            text-align: center;
-        }
-        .skin-emoji-large {
-            font-size: 2.5rem;
-        }
-        .skin-name {
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        .skin-multiplier {
-            font-size: 0.75rem;
-            color: #ffd700;
-            font-weight: 600;
-        }
-        .skin-price {
-            font-size: 0.7rem;
-            color: #ffeaa7;
-            background: rgba(0,0,0,0.3);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        .skin-action-btn {
-            border: none;
-            border-radius: 12px;
-            padding: 8px 14px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: #fff;
-            cursor: pointer;
-            margin-top: 4px;
-            width: 100%;
-            transition: transform 0.1s, filter 0.2s;
-        }
-        .skin-action-btn:active {
-            transform: scale(0.92);
-        }
-        .skin-action-btn.buy {
-            background: linear-gradient(135deg, #ffb347, #ff8c00);
-        }
-        .skin-action-btn.use {
-            background: #2196F3;
-        }
-        .skin-action-btn.unequip {
-            background: #f44336;
-        }
-        .skin-action-btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-            filter: grayscale(30%);
-        }
-        .skin-action-btn.equipped {
-            background: #4caf50;
-        }
-        .shake {
-            animation: shake 0.3s ease-in-out;
-        }
-        @keyframes shake {
-            0%,
-            100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
-        }
-
-        .confirm-dialog {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        .confirm-dialog.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .confirm-box {
-            background: rgba(30,30,60,0.95);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: center;
-            color: #fff;
-            max-width: 300px;
-            width: 90%;
-        }
-        .confirm-box p {
-            margin-bottom: 16px;
-        }
-        .confirm-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        .confirm-actions button {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .confirm-yes {
-            background: #4caf50;
-            color: #fff;
-        }
-        .confirm-no {
-            background: #f44336;
-            color: #fff;
-        }
-
-        .score-section {
-            text-align: center;
-            width: 100%;
-        }
-        .score-label {
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.45);
-        }
-        .score-value {
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 0 24px rgba(255,215,0,0.7);
-            line-height: 1.1;
-            transition: transform 0.2s;
-            word-break: break-word;
-        }
-        .score-value.pulse {
-            animation: scorePulse 0.35s ease;
-        }
-        @keyframes scorePulse {
-            0%,
-            100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .emoji-wrapper {
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,215,0,0.18) 0%, rgba(255,215,0,0.03) 55%, transparent 68%);
-            transition: transform 0.1s;
-            flex-shrink: 0;
-        }
-        .emoji-wrapper:active {
-            transform: scale(0.86);
-        }
-        .emoji-display {
-            font-size: 80px;
-            line-height: 1;
-            pointer-events: none;
-            filter: drop-shadow(0 6px 16px rgba(0,0,0,0.5));
-        }
-        .emoji-wrapper.pop .emoji-display {
-            animation: emojiPop 0.28s ease;
-        }
-        @keyframes emojiPop {
-            0% { transform: scale(0.6); }
-            45% { transform: scale(1.25); }
-            75% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-
-        .floating-text {
-            position: fixed;
-            pointer-events: none;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #ffd700;
-            text-shadow: 0 0 14px rgba(255,215,0,0.9);
-            animation: floatAway 1.1s ease-out forwards;
-            white-space: nowrap;
-            z-index: 999;
-        }
-        @keyframes floatAway {
-            0% { opacity:1; transform: translateY(0) scale(0.8); }
-            25% { opacity:1; transform: translateY(-18px) scale(1.2); }
-            100% { opacity:0; transform: translateY(-80px) scale(0.6); }
-        }
-
-        .stats-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
-        .stat-badge {
-            background: rgba(255,255,255,0.06);
-            border-radius: 18px;
-            padding: 8px 12px;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.85);
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-            flex: 1 1 auto;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .stat-badge:active {
-            background: rgba(255,255,255,0.12);
-        }
-        .stat-badge.active-tab {
-            background: rgba(255,215,0,0.15);
-            border-color: rgba(255,215,0,0.4);
-            box-shadow: 0 0 12px rgba(255,215,0,0.2);
-        }
-        .stat-value {
-            color: #ffd700;
-            font-weight: 700;
-        }
-        .stat-badge .toggle-icon {
-            font-size: 0.65rem;
-            opacity: 0.8;
-        }
-
-        .upgrades-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .upgrade-category {
-            background: rgba(255,255,255,0.03);
-            border-radius: 18px;
-            padding: 10px 10px 14px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .upgrade-category.hidden {
-            display: none;
-        }
-        .category-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.7);
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-        }
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-        @media (max-width: 350px) {
-            .items-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .item-btn {
-            background: linear-gradient(135deg, rgba(255,160,0,0.18), rgba(255,120,0,0.12));
-            border: 1.5px solid rgba(255,255,255,0.1);
-            border-radius: 14px;
-            padding: 12px 10px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-align: center;
-            min-height: 70px;
-            touch-action: manipulation;
-        }
-        .item-btn:active:not(:disabled) {
-            transform: scale(0.95);
-            background: linear-gradient(135deg, rgba(255,210,0,0.35), rgba(255,150,0,0.25));
-        }
-        .item-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            filter: grayscale(30%);
-        }
-        .item-bonus {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #ffd700;
-        }
-        .item-price {
-            font-size: 0.7rem;
-            background: rgba(0,0,0,0.35);
-            padding: 4px 10px;
-            border-radius: 14px;
-            color: #ffeaa7;
-        }
-        .item-owned {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .settings-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 60;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s;
-        }
-        .settings-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .settings-content {
-            background: rgba(20,20,45,0.95);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-            width: 90%;
-            max-width: 350px;
-        }
-        .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 48px;
-            height: 26px;
-            background: #555;
-            border-radius: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .toggle-switch.active {
-            background: #4caf50;
-        }
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            background: #fff;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s;
-        }
-        .toggle-switch.active::after {
-            transform: translateX(22px);
-        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+        body { font-family: 'Nunito', sans-serif; background: linear-gradient(160deg, #1a1a3e, #2d2d5e, #3a3a6e); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 8px; }
+        .container { background: rgba(255,255,255,0.06); backdrop-filter: blur(24px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.2); padding: 14px 10px; width: 100%; max-width: 400px; height: 95vh; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+        .header { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+        .top-row { display: flex; align-items: center; gap: 6px; }
+        .btn-icon { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; width: 36px; height: 36px; font-size: 1.1rem; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .btn-icon:active { background: rgba(255,215,0,0.3); transform: scale(0.9); }
+        .prestige-bar { flex: 1; background: rgba(255,255,255,0.08); border-radius: 16px; height: 36px; display: flex; align-items: center; padding: 0 8px; gap: 6px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.65rem; color: #fff; }
+        .prestige-fill { height: 5px; background: linear-gradient(90deg,#ffd700,#ff8c00); border-radius: 3px; width: 0%; transition: width 0.3s; }
+        .prestige-text { white-space: nowrap; font-weight: 600; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .prestige-btn { background: #ff8c00; border: none; border-radius: 8px; padding: 3px 10px; font-weight: 700; color: #fff; cursor: pointer; font-size: 0.65rem; }
+        .prestige-btn:disabled { opacity: 0.4; background: #555; }
+        .res-row { display: flex; gap: 8px; justify-content: center; }
+        .res-badge { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 3px 10px; font-size: 0.7rem; font-weight: 700; color: #fff; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; }
+        .coin { color:#ffd700; } .shard { color:#c882ff; } .nshard { color:#82c8ff; }
+        .score { text-align: center; font-size: 2rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(255,215,0,0.7); }
+        .emoji-wrap { position: relative; cursor: pointer; width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle, rgba(255,215,0,0.25), rgba(255,215,0,0.05) 55%, transparent); display: flex; align-items: center; justify-content: center; }
+        .emoji-wrap:active { transform: scale(0.9); }
+        .emoji { font-size: 60px; }
+        .acc { position: absolute; top: -5px; right: -5px; font-size: 22px; }
+        .stats { display: flex; gap: 8px; justify-content: center; }
+        .stat { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 5px 10px; font-size: 0.65rem; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+        .stat span { color: #ffd700; font-weight: 700; }
+        .tabs { display: flex; gap: 6px; }
+        .tab { flex: 1; padding: 8px; border-radius: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-weight: 700; font-size: 0.75rem; cursor: pointer; text-align: center; transition: 0.2s; }
+        .tab.active { background: rgba(255,215,0,0.2); border-color: rgba(255,215,0,0.5); }
+        .upgrades { flex: 1; overflow-y: auto; padding-bottom: 8px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+        .upgrade-btn { background: linear-gradient(135deg, rgba(255,180,0,0.2), rgba(255,140,0,0.15)); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 4px; color: #fff; font-weight: 700; font-size: 0.7rem; cursor: pointer; min-height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+        .upgrade-btn:disabled { opacity: 0.4; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.25s; }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-box { background: #1e1e3a; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); width: 92%; max-width: 380px; max-height: 80vh; display: flex; flex-direction: column; color: #fff; }
+        .modal-head { display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+        .modal-close { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+        .modal-body { padding: 12px 16px; overflow-y: auto; }
+        .skin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .skin-card { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 6px; text-align: center; border: 1px solid #333; }
+        .skin-btn { border: none; border-radius: 8px; padding: 4px 10px; font-weight: 700; font-size: 0.7rem; color: #fff; cursor: pointer; width: 100%; margin-top: 4px; }
+        .rarity-common { background: #9e9e9e; } .rarity-uncommon { background: #4caf50; } .rarity-rare { background: #2196F3; } .rarity-epic { background: #9c27b0; } .rarity-mythical { background: #f44336; } .rarity-god { background: linear-gradient(135deg,#ffd700,#ff8c00); animation: godGlow 1.5s infinite; color:#000; } .rarity-shiny { background: linear-gradient(135deg,#fff,#ccc); animation: shinyGlow 0.5s infinite alternate; color:#333; }
+        @keyframes godGlow { 0%,100%{ box-shadow: 0 0 6px gold; } 50%{ box-shadow: 0 0 18px gold; } } @keyframes shinyGlow { 0%{ box-shadow: 0 0 6px white; } 100%{ box-shadow: 0 0 20px white; } }
+        .gacha-rates { font-size: 0.65rem; color: #aaa; margin-top: 6px; line-height: 1.4; }
+        .gacha-rates span { color: #ffd700; }
+        .debug-console { background: #000; color: #0f0; font-family: monospace; font-size: 0.7rem; max-height: 80px; overflow-y: auto; padding: 6px; border-radius: 8px; margin-bottom: 6px; white-space: pre-wrap; }
+        .debug-input { width: 100%; padding: 6px; background: #111; color: #0f0; border: 1px solid #0f0; border-radius: 8px; margin-bottom: 6px; }
     </style>
 </head>
 <body>
-    <div class="particles-bg" id="particlesBg"></div>
-
-    <div class="game-container" id="gameContainer">
-        <div class="top-bar">
-            <div class="skin-settings-group">
-                <button class="skin-button" id="skinButton">🎨</button>
-                <button class="settings-button" id="settingsButton">⚙️</button>
+<div class="container" id="container">
+    <div class="header">
+        <div class="top-row">
+            <div style="display:flex; gap:4px;">
+                <button class="btn-icon" id="btnSkin">🛒</button>
+                <button class="btn-icon" id="btnGacha">🃏</button>
+                <button class="btn-icon" id="btnAcc">🎀</button>
             </div>
             <div class="prestige-bar">
-                <span class="prestige-text" id="prestigeText">x1 🌟 36T</span>
-                <div style="flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin:0 6px;">
-                    <div class="prestige-fill" id="prestigeFill"></div>
-                </div>
-                <button class="prestige-btn" id="prestigeBtn" disabled>Tái sinh</button>
+                <div class="prestige-text"><span id="prestigeText">x1 🌟 36T</span><button class="prestige-btn" id="btnPrestige" disabled>Tái sinh</button></div>
+                <div style="height:5px;background:rgba(255,255,255,0.15);border-radius:3px;"><div class="prestige-fill" id="prestigeFill"></div></div>
             </div>
+            <button class="btn-icon" id="btnSettings">⚙️</button>
         </div>
-
-        <div class="score-section">
-            <div class="score-label">Điểm</div>
-            <div class="score-value" id="scoreDisplay">0</div>
+        <div class="res-row">
+            <div class="res-badge coin" id="coinDis">🪙0</div>
+            <div class="res-badge shard" id="shardDis">💎0</div>
+            <div class="res-badge nshard" id="nshardDis">🔷0</div>
         </div>
-
-        <div class="emoji-wrapper" id="emojiWrapper">
-            <span class="emoji-display" id="mainEmoji">😶</span>
+        <div class="score" id="scoreDis">0</div>
+        <div class="emoji-wrap" id="emojiWrap"><span class="emoji" id="mainEmoji">😶</span><span class="acc" id="accEmoji"></span></div>
+        <div class="stats">
+            <div class="stat">👆 Click: <span id="clickPower">1</span></div>
+            <div class="stat">⏱️ Giây: <span id="passivePower">0</span></div>
         </div>
-
-        <div class="stats-row">
-            <div class="stat-badge active-tab" id="powerBadge">
-                <span>👆 Click: <span class="stat-value" id="clickPowerDisplay">1</span></span>
-                <span class="toggle-icon">▼</span>
-            </div>
-            <div class="stat-badge" id="passiveBadge">
-                <span>⏱️ Giây: <span class="stat-value" id="passiveDisplay">0</span></span>
-                <span class="toggle-icon">▶</span>
-            </div>
-        </div>
-
-        <div class="upgrades-wrapper" id="upgradesWrapper"></div>
-    </div>
-
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="modal-title">🎨 Shop Skin</span>
-                <button class="modal-close" id="modalClose">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="skin-grid" id="skinGrid"></div>
-            </div>
+        <div class="tabs">
+            <button class="tab active" id="tabPower">👆 Power</button>
+            <button class="tab" id="tabPassive">⏱️ Thụ động</button>
         </div>
     </div>
+    <div class="upgrades" id="upgradeContainer"></div>
+</div>
 
-    <div class="confirm-dialog" id="confirmDialog">
-        <div class="confirm-box">
-            <p id="confirmMessage">Bạn có chắc muốn mua skin này?</p>
-            <div class="confirm-actions">
-                <button class="confirm-yes" id="confirmYes">Có</button>
-                <button class="confirm-no" id="confirmNo">Không</button>
-            </div>
-        </div>
-    </div>
+<!-- Modals -->
+<div class="modal" id="modalSkin"><div class="modal-box"><div class="modal-head"><span>🛒 Shop Skin</span><button class="modal-close">✕</button></div><div class="modal-body"><div class="skin-grid" id="skinGrid"></div></div></div></div>
+<div class="modal" id="modalGacha"><div class="modal-box"><div class="modal-head"><span>🃏 Gacha</span><button class="modal-close">✕</button></div><div class="modal-body" id="gachaBody"></div></div></div>
+<div class="modal" id="modalAcc"><div class="modal-box"><div class="modal-head"><span>🎀 Phụ kiện</span><button class="modal-close">✕</button></div><div class="modal-body" id="accBody"></div></div></div>
+<div class="modal" id="modalPrestige"><div class="modal-box" style="padding:20px;text-align:center;"><h3>🌟 Tái Sinh</h3><p id="prestigeInfo"></p><button id="confirmPrestige" style="background:#ff8c00;border:none;border-radius:10px;padding:10px;margin:10px;color:#fff;">Xác nhận</button><button class="modal-close" style="background:#f44336;border:none;border-radius:10px;padding:10px;color:#fff;">Hủy</button></div></div>
+<div class="modal" id="modalGachaResult"><div class="modal-box" style="padding:20px;text-align:center;"><h3>🎉 Kết quả</h3><div id="resultIcons" style="font-size:2rem;margin:10px 0;"></div><p id="resultText"></p><button class="modal-close" style="background:#4caf50;border:none;border-radius:10px;padding:10px;color:#fff;">OK</button></div></div>
+<div class="modal" id="modalSettings"><div class="modal-box" style="padding:20px;"><h3>⚙️ Cài đặt</h3><label><input type="checkbox" id="fullNum"> Hiển thị số đầy đủ</label><br><br><label><input type="checkbox" id="customSkinToggle"> Dùng ảnh custom</label><br><input type="file" id="customSkinFile" accept="image/*" style="display:none;"><button id="chooseCustomSkin" style="background:#ff8c00;border:none;border-radius:8px;padding:6px 12px;color:#fff;margin-top:6px;">Chọn ảnh</button><br><button class="modal-close" style="margin-top:12px;background:#f44336;border:none;border-radius:10px;padding:10px;color:#fff;">Đóng</button></div></div>
+<div class="modal" id="modalDebug"><div class="modal-box" style="padding:16px;"><h3>🛠️ Debug</h3><div class="debug-console" id="debugConsole"></div><input type="text" class="debug-input" id="debugInput" placeholder="/give point 100 Qa"><button id="debugExec" style="background:#4caf50;border:none;border-radius:8px;padding:6px;color:#fff;">Thực thi</button><button class="modal-close" style="background:#f44336;border:none;border-radius:8px;padding:6px;color:#fff;margin-left:4px;">Đóng</button></div></div>
 
-    <div class="settings-modal" id="settingsModal">
-        <div class="settings-content">
-            <h3 style="margin-bottom:10px;">⚙️ Cài đặt</h3>
-            <div class="settings-item">
-                <span>Hiển thị số đầy đủ</span>
-                <div class="toggle-switch" id="toggleFullNumbers"></div>
-            </div>
-            <button style="margin-top:12px;padding:10px;width:100%;border-radius:12px;border:none;background:#f44336;color:#fff;font-weight:700;cursor:pointer;" id="closeSettings">Đóng</button>
-        </div>
-    </div>
+<script>
+(function() {
+    const $ = id => document.getElementById(id);
+    // DOM
+    const scoreDis = $('scoreDis'), clickPower = $('clickPower'), passivePower = $('passivePower');
+    const coinDis = $('coinDis'), shardDis = $('shardDis'), nshardDis = $('nshardDis');
+    const mainEmoji = $('mainEmoji'), accEmoji = $('accEmoji'), emojiWrap = $('emojiWrap');
+    const prestigeFill = $('prestigeFill'), prestigeBtn = $('btnPrestige'), prestigeText = $('prestigeText');
+    const tabPower = $('tabPower'), tabPassive = $('tabPassive'), upgradeContainer = $('upgradeContainer');
+    const skinGrid = $('skinGrid'), gachaBody = $('gachaBody'), accBody = $('accBody');
+    const modalSkin = $('modalSkin'), modalGacha = $('modalGacha'), modalAcc = $('modalAcc');
+    const modalPrestige = $('modalPrestige'), prestigeInfo = $('prestigeInfo'), confirmPrestigeBtn = $('confirmPrestige');
+    const modalGachaResult = $('modalGachaResult'), resultIcons = $('resultIcons'), resultText = $('resultText');
+    const fullNum = $('fullNum'), customSkinToggle = $('customSkinToggle'), customSkinFile = $('customSkinFile'), chooseCustomSkin = $('chooseCustomSkin');
+    const debugConsole = $('debugConsole'), debugInput = $('debugInput'), debugExec = $('debugExec');
 
-    <script>
-        (function() {
-            // DOM elements
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            const clickPowerDisplay = document.getElementById('clickPowerDisplay');
-            const passiveDisplay = document.getElementById('passiveDisplay');
-            const mainEmoji = document.getElementById('mainEmoji');
-            const emojiWrapper = document.getElementById('emojiWrapper');
-            const upgradesWrapper = document.getElementById('upgradesWrapper');
-            const particlesBg = document.getElementById('particlesBg');
-            const powerBadge = document.getElementById('powerBadge');
-            const passiveBadge = document.getElementById('passiveBadge');
-            const skinButton = document.getElementById('skinButton');
-            const settingsButton = document.getElementById('settingsButton');
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalClose = document.getElementById('modalClose');
-            const skinGrid = document.getElementById('skinGrid');
-            const prestigeFill = document.getElementById('prestigeFill');
-            const prestigeBtn = document.getElementById('prestigeBtn');
-            const prestigeText = document.getElementById('prestigeText');
-            const confirmDialog = document.getElementById('confirmDialog');
-            const confirmMessage = document.getElementById('confirmMessage');
-            const confirmYes = document.getElementById('confirmYes');
-            const confirmNo = document.getElementById('confirmNo');
-            const settingsModal = document.getElementById('settingsModal');
-            const toggleFullNumbers = document.getElementById('toggleFullNumbers');
-            const closeSettingsBtn = document.getElementById('closeSettings');
+    // Data
+    const SKINS = {
+        '😶':{mul:1,price:0,rarity:'common',def:true,ns:0},
+        '😂':{mul:1.02,price:31.25e12,rarity:'common',ns:300},
+        '😊':{mul:1.1,price:15.625e12,rarity:'common',ns:250},
+        '😇':{mul:1.15,price:23.4375e12,rarity:'uncommon',ns:1000},
+        '😁':{mul:1.2,price:78.125e12,rarity:'uncommon',ns:1500},
+        '🥳':{mul:1.05,price:18.75e12,rarity:'common',ns:400},
+        '😱':{mul:1.25,price:62.5e12,rarity:'uncommon',ns:2000},
+        '🤣':{mul:1.3,price:93.75e12,rarity:'uncommon',ns:2500},
+        '🤯':{mul:1.35,price:106.25e12,rarity:'rare',ns:2600},
+        '🥶':{mul:1.45,price:137.5e12,rarity:'rare',ns:2800},
+        '😍':{mul:1.5,price:156.25e12,rarity:'rare',ns:3000},
+        '😤':{mul:1.6,price:187.5e12,rarity:'epic',ns:4000},
+        '😜':{mul:1.8,price:250e12,rarity:'epic',ns:4500},
+        '🤗':{mul:1.9,price:281.25e12,rarity:'epic',ns:5000},
+        '🤩':{mul:2.0,price:312.5e12,rarity:'epic',ns:5500},
+        '😴':{mul:2.2,price:437.5e12,rarity:'mythical',ns:6000},
+        '🤪':{mul:2.5,price:625e12,rarity:'mythical',ns:7000},
+        '🤓':{mul:2.8,price:875e12,rarity:'mythical',ns:8000},
+        '😎':{mul:3.0,price:1.5625e15,rarity:'mythical',ns:8000},
+        '🦊':{mul:3.2,price:1.25e15,rarity:'god',ns:10000},
+        '😷':{mul:3.5,price:1.875e15,rarity:'god',ns:12000},
+        '🐼':{mul:3.8,price:2.5e15,rarity:'god',ns:15000},
+        '😈':{mul:4.0,price:3.125e15,rarity:'god',ns:18000},
+        '🥴':{mul:4.5,price:4.375e15,rarity:'god',ns:20000},
+        '🤑':{mul:5.0,price:6.25e15,rarity:'god',ns:25000},
+        '🤠':{mul:5.5,price:9.375e15,rarity:'god',ns:30000},
+        '👽':{mul:6.0,price:15.625e15,rarity:'god',ns:40000},
+        '👻':{mul:7.0,price:21.875e15,rarity:'god',ns:50000},
+        '🦄':{mul:7.5,price:25e15,rarity:'god',ns:60000},
+        '🤖':{mul:8.0,price:31.25e15,rarity:'god',ns:70000},
+        '💀':{mul:9.0,price:43.75e15,rarity:'god',ns:80000},
+        '👾':{mul:10.0,price:62.5e15,rarity:'god',ns:100000},
+        '🎃':{mul:11.0,price:81.25e15,rarity:'god',ns:120000},
+        '🐉':{mul:12.0,price:100e15,rarity:'god',ns:150000},
+        '👹':{mul:13.0,price:125e15,rarity:'god',ns:180000},
+        '👺':{mul:15.0,price:187.5e15,rarity:'god',ns:200000},
+        '💎':{mul:16.0,price:225e15,rarity:'god',ns:250000},
+        '🔥':{mul:20.0,price:375e15,rarity:'god',ns:300000},
+        '🌟':{mul:25.0,price:625e15,rarity:'god',ns:500000}
+    };
+    const LIMITED = {
+        '👑':{mul:50,shardCost:2500,shiny:'👑✨'},
+        '🔮':{mul:100,shardCost:2500,shiny:'🔮✨'},
+        '💠':{mul:200,shardCost:2500,shiny:'💠✨'},
+        '🐲':{mul:300,shardCost:2500,shiny:'🐲✨'},
+        '🦅':{mul:400,shardCost:2500,shiny:'🦅✨'},
+        '🐺':{mul:500,shardCost:2500,shiny:'🐺✨'},
+        '🦈':{mul:600,shardCost:2500,shiny:'🦈✨'},
+        '🐋':{mul:700,shardCost:2500,shiny:'🐋✨'},
+        '🦖':{mul:800,shardCost:2500,shiny:'🦖✨'},
+        '🦕':{mul:900,shardCost:2500,shiny:'🦕✨'},
+        '🦜':{mul:1000,shardCost:2500,shiny:'🦜✨'},
+        '🦚':{mul:1200,shardCost:2500,shiny:'🦚✨'},
+        '🐉':{mul:1500,shardCost:2500,shiny:'🐉✨'}
+    };
+    const SHINY = {};
+    for (const [k,v] of Object.entries(LIMITED)) if (v.shiny) SHINY[v.shiny] = {mul:v.mul*20000,rarity:'shiny'};
+    const ALL_KEYS = [...Object.keys(SKINS),...Object.keys(LIMITED),...Object.keys(SHINY)];
 
-            // SKINS (sorted by multiplier in render)
-            const SKINS = {
-                '😶': { multiplier: 1.0, price: 0, default: true },
-                '😂': { multiplier: 1.02, price: 25000000 },
-                '😊': { multiplier: 1.1, price: 12500000 },
-                '😇': { multiplier: 1.15, price: 18750000 },
-                '😁': { multiplier: 1.2, price: 62500000 },
-                '🥳': { multiplier: 1.05, price: 15000000 },
-                '😱': { multiplier: 1.25, price: 50000000 },
-                '🤣': { multiplier: 1.3, price: 75000000 },
-                '🤯': { multiplier: 1.35, price: 85000000 },
-                '🥶': { multiplier: 1.45, price: 110000000 },
-                '😍': { multiplier: 1.5, price: 125000000 },
-                '😤': { multiplier: 1.6, price: 150000000 },
-                '😜': { multiplier: 1.8, price: 200000000 },
-                '🤗': { multiplier: 1.9, price: 225000000 },
-                '🤩': { multiplier: 2.0, price: 250000000 },
-                '😴': { multiplier: 2.2, price: 350000000 },
-                '🤪': { multiplier: 2.5, price: 500000000 },
-                '🤓': { multiplier: 2.8, price: 700000000 },
-                '😎': { multiplier: 3.0, price: 1250000000 },
-                '🦊': { multiplier: 3.2, price: 1000000000 },
-                '😷': { multiplier: 3.5, price: 1500000000 },
-                '🐼': { multiplier: 3.8, price: 2000000000 },
-                '😈': { multiplier: 4.0, price: 2500000000 },
-                '🥴': { multiplier: 4.5, price: 3500000000 },
-                '🤑': { multiplier: 5.0, price: 5000000000 },
-                '🤠': { multiplier: 5.5, price: 7500000000 },
-                '👽': { multiplier: 6.0, price: 12500000000 },
-                '👻': { multiplier: 7.0, price: 17500000000 },
-                '🦄': { multiplier: 7.5, price: 20000000000 },
-                '🤖': { multiplier: 8.0, price: 25000000000 },
-                '💀': { multiplier: 9.0, price: 35000000000 },
-                '👾': { multiplier: 10.0, price: 50000000000 },
-                '🎃': { multiplier: 11.0, price: 65000000000 },
-                '🐉': { multiplier: 12.0, price: 80000000000 },
-                '👹': { multiplier: 13.0, price: 100000000000 },
-                '👺': { multiplier: 15.0, price: 150000000000 },
-                '💎': { multiplier: 16.0, price: 180000000000 },
-                '🔥': { multiplier: 20.0, price: 300000000000 },
-                '🌟': { multiplier: 25.0, price: 500000000000 }
+    const ACCESSORIES = [
+        {name:'🎀 Nơ',mul:1.05,level:1,price:1e12},
+        {name:'🌟 Sao',mul:1.1,level:10,price:5e12},
+        {name:'💎 Đá quý',mul:1.2,level:20,price:25e12},
+        {name:'🔥 Lửa',mul:1.5,level:40,price:100e12},
+        {name:'🌈 Cầu vồng',mul:2.0,level:60,price:500e12},
+        {name:'✨ Thiên thạch',mul:3.0,level:80,price:2.5e15},
+        {name:'🌌 Ngân hà',mul:5.0,level:100,price:10e15}
+    ];
+
+    const BONUSES = [1,10,100,1000,10000,100000,1e6,1e7,1e8,1e9,1e10,25e9,250e9,1e12,1e13,25e12,250e12,500e12,1e15,10e15,100e15,250e15,750e15,1e18,25e18,50e18];
+    const UNITS = ['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','Un','Du','Tr','Qu','Vi','Se'];
+    const STAR = 1e33;
+    const STAR_ICON = '❇️';
+
+    let game = {
+        pts:0, coins:0, shards:0, nshards:0,
+        clickItems:{}, passiveItems:{},
+        owned:['😶'], equipped:'😶',
+        prestige:0, accum:0,
+        fullNum:false, boosts:[],
+        cardStock:{x2:0}, lastRestock:Date.now(),
+        shinyCards:0, accessory:null,
+        customSkin:null, customEnabled:false
+    };
+    let tab = 'power';
+    let debugClicks = 0, debugTimer = null;
+    const debugLog = [];
+
+    function initItems(){ BONUSES.forEach(b=>{if(!(b in game.clickItems))game.clickItems[b]=0; if(!(b in game.passiveItems))game.passiveItems[b]=0;}); }
+    function getSkinMul(){ return SHINY[game.equipped]?.mul || LIMITED[game.equipped]?.mul || SKINS[game.equipped]?.mul || 1; }
+    function getAccMul(){ const a = ACCESSORIES.find(x=>x.name===game.accessory); return a?a.mul:1; }
+    function getPrestigeMul(){ return 1 + game.prestige + game.accum; }
+    function getClick(){ let b=1; for(const[k,v]of Object.entries(game.clickItems)) b+=parseInt(k)*v; let m=getPrestigeMul()*getSkinMul()*getAccMul(); game.boosts.forEach(x=>m*=x.mul); return Math.floor(b*m); }
+    function getPassive(){ let b=0; for(const[k,v]of Object.entries(game.passiveItems)) b+=parseInt(k)*v; let m=getPrestigeMul()*getSkinMul()*getAccMul(); game.boosts.forEach(x=>m*=x.mul); return Math.floor(b*m); }
+    function price(base,owned){ let ml,gr; if(base>=1e15){ml=1250;gr=5;}else if(base>=1e4){ml=20;gr=8;}else{ml=50;gr=1.5;} return Math.floor(base*ml*Math.pow(gr,owned)); }
+    function prestigeCost(){ return 36e15 * Math.pow(25000, game.prestige); }
+
+    function fmt(n){
+        if(!isFinite(n)) return '∞';
+        if(game.fullNum) return Math.floor(n).toLocaleString('vi-VN');
+        if(n<1000) return Math.floor(n).toString();
+        if(n>=STAR){ let v=n/STAR; let i=0; while(v>=1000&&i<UNITS.length-1){v/=1000;i++;} return v.toFixed(1).replace(/\.0$/,'')+' '+(UNITS[i]?UNITS[i]+STAR_ICON:STAR_ICON); }
+        let v=n,i=0; while(v>=1000&&i<UNITS.length-1){v/=1000;i++;} return v.toFixed(1).replace(/\.0$/,'')+' '+UNITS[i];
+    }
+    function parse(str){ str=str.trim().toUpperCase(); if(!str)return 0; for(let i=UNITS.length-1;i>0;i--){ if(UNITS[i]&&str.endsWith(UNITS[i])){ let val=parseFloat(str.slice(0,-UNITS[i].length)); return isNaN(val)?0:val*Math.pow(1000,i); } } return parseFloat(str)||0; }
+
+    function updateUI(){
+        scoreDis.textContent = fmt(game.pts);
+        clickPower.textContent = fmt(getClick());
+        passivePower.textContent = fmt(getPassive());
+        if(game.customEnabled && game.customSkin){ mainEmoji.style.display='none'; let img = document.querySelector('#customImg'); if(!img){ img = document.createElement('img'); img.id='customImg'; img.style.width='100%'; img.style.height='100%'; img.style.borderRadius='50%'; img.style.objectFit='cover'; emojiWrap.appendChild(img); } img.src = game.customSkin; }
+        else { mainEmoji.style.display='block'; mainEmoji.textContent = game.equipped; let img = document.querySelector('#customImg'); if(img) img.remove(); }
+        accEmoji.textContent = game.accessory ? game.accessory.split(' ')[0] : '';
+        let cost = prestigeCost();
+        prestigeFill.style.width = Math.min(100,(game.pts/cost)*100)+'%';
+        prestigeBtn.disabled = game.pts < cost;
+        prestigeText.textContent = `x${getPrestigeMul()} 🌟 ${fmt(cost)}`;
+        coinDis.textContent = `🪙${game.coins}`;
+        shardDis.textContent = `💎${game.shards}`;
+        nshardDis.textContent = `🔷${game.nshards}`;
+        renderUpgrades();
+    }
+
+    function buyClick(b){ let o=game.clickItems[b]||0,p=price(b,o); if(game.pts<p)return; game.pts-=p; game.clickItems[b]=o+1; updateUI(); save(); }
+    function buyPassive(b){ let o=game.passiveItems[b]||0,p=price(b,o); if(game.pts<p)return; game.pts-=p; game.passiveItems[b]=o+1; updateUI(); save(); }
+
+    function renderUpgrades(){
+        upgradeContainer.innerHTML = '';
+        let bonuses = tab==='power'?BONUSES:BONUSES;
+        let items = tab==='power'?game.clickItems:game.passiveItems;
+        let fn = tab==='power'?buyClick:buyPassive;
+        let grid = document.createElement('div'); grid.className='grid';
+        bonuses.forEach(b=>{
+            let o=items[b]||0, p=price(b,o);
+            let btn=document.createElement('button'); btn.className='upgrade-btn';
+            btn.innerHTML=`<span>+${fmt(b)}${tab==='passive'?'/s':''}</span><span>💰${fmt(p)}</span>`;
+            btn.disabled = game.pts<p;
+            btn.onclick = ()=>fn(b);
+            grid.appendChild(btn);
+        });
+        upgradeContainer.appendChild(grid);
+    }
+
+    function setTab(t){ tab=t; tabPower.classList.toggle('active',t==='power'); tabPassive.classList.toggle('active',t==='passive'); renderUpgrades(); }
+
+    function prestigeConfirm(){
+        if(game.pts<prestigeCost()) return;
+        let newP = Math.floor(game.pts/1.25e26);
+        prestigeInfo.innerHTML = `Điểm hiện tại: ${fmt(game.pts)}<br>+${newP} điểm tích lũy<br>Tổng sau tái sinh: ${game.accum+newP}`;
+        modalPrestige.classList.add('active');
+    }
+    function doPrestige(){
+        let newP = Math.floor(game.pts/1.25e26);
+        game.accum += newP; game.prestige++;
+        game.pts=0; game.clickItems={}; game.passiveItems={}; initItems();
+        updateUI(); save();
+        modalPrestige.classList.remove('active');
+    }
+
+    function renderSkinShop(){
+        skinGrid.innerHTML='';
+        let all = [...Object.entries(SKINS).filter(([_,d])=>!d.def), ...Object.entries(LIMITED).map(([k,d])=>[k,{...d,rarity:'god',lim:true}]), ...Object.entries(SHINY).map(([k,d])=>[k,{...d,lim:true,shiny:true}])].sort((a,b)=>(a[1].mul||0)-(b[1].mul||0));
+        all.forEach(([emoji,data],idx)=>{
+            let owned=game.owned.includes(emoji), eq=game.equipped===emoji;
+            let card=document.createElement('div'); card.className='skin-card';
+            card.innerHTML=`<div style="font-size:2rem;">${emoji}</div><div>${emoji}</div><div>x${data.mul}</div>`;
+            if(data.shiny) card.innerHTML+='<div style="font-size:0.6rem;">✨ 1/1Sx</div>';
+            else if(data.lim&&!owned) card.innerHTML+=`<div>💎${data.shardCost}</div>`;
+            else if(!owned) card.innerHTML+=`<div>💰${fmt(data.price)} | 🔷${data.ns}</div>`;
+            let btn=document.createElement('button');
+            btn.className=`skin-btn rarity-${data.rarity}`;
+            btn.textContent=!owned?(data.lim?'Đổi':'Mua'):(eq?'Gỡ':'Dùng');
+            btn.onclick=()=>{
+                if(!owned){
+                    if(data.lim&&!data.shiny){ if(game.shards>=data.shardCost){game.shards-=data.shardCost; game.owned.push(emoji); updateUI();renderSkinShop();save();} else alert('Không đủ mảnh!'); }
+                    else if(data.shiny) alert('Chỉ nhận từ Gacha!');
+                    else { if(game.pts>=data.price){ game.pts-=data.price; game.owned.push(emoji); updateUI();renderSkinShop();save(); } else if(game.nshards>=data.ns){ game.nshards-=data.ns; game.owned.push(emoji); updateUI();renderSkinShop();save(); } else alert('Không đủ!'); }
+                }else if(!eq){game.equipped=emoji; updateUI();renderSkinShop();save();}
+                else{game.equipped='😶'; updateUI();renderSkinShop();save();}
             };
+            card.appendChild(btn);
+            if(idx===0){ card.addEventListener('click',(e)=>{ if(e.target===btn)return; debugClicks++; if(debugClicks>=10){ debugClicks=0; openDebug(); } clearTimeout(debugTimer); debugTimer=setTimeout(()=>{debugClicks=0;},2000); }); }
+            skinGrid.appendChild(card);
+        });
+    }
 
-            // BONUS mở rộng: thêm 10B, 25B, 250B, 1T, 10T, 25T, 250T, 500T, 1Qa
-            const CLICK_BONUSES = [
-                1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000,
-                10000000000, 25000000000, 250000000000, 1000000000000, 10000000000000,
-                25000000000000, 250000000000000, 500000000000000, 1000000000000000
-            ];
-            const PASSIVE_BONUSES = [
-                1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000,
-                10000000000, 25000000000, 250000000000, 1000000000000, 10000000000000,
-                25000000000000, 250000000000000, 500000000000000, 1000000000000000
-            ];
-
-            const PRICE_MULTIPLIER_LOW = 50;      // bonus < 10,000
-            const PRICE_MULTIPLIER_MID = 20;      // 10,000 <= bonus < 10B
-            const PRICE_MULTIPLIER_HIGH = 2500;   // bonus >= 10B
-            const PRICE_THRESHOLD_MID = 10000;
-            const PRICE_THRESHOLD_HIGH = 10000000000; // 10B
-            const PRICE_GROWTH_LOW = 1.5;
-            const PRICE_GROWTH_MID = 8;
-            const PRICE_GROWTH_HIGH = 5;
-            const PRESTIGE_COST = 36e15; // 36 Qa
-
-            let gameState = {
-                points: 0,
-                clickItems: {},
-                passiveItems: {},
-                ownedSkins: ['😶'],
-                equippedSkin: '😶',
-                prestigeLevel: 0,
-                showFullNumbers: false
-            };
-
-            function initItems() {
-                CLICK_BONUSES.forEach(b => { if (!(b in gameState.clickItems)) gameState.clickItems[b] = 0; });
-                PASSIVE_BONUSES.forEach(b => { if (!(b in gameState.passiveItems)) gameState.passiveItems[b] = 0; });
-            }
-
-            let activeTab = 'power';
-            let pendingSkinBuy = null;
-
-            function getSkinMultiplier() {
-                return (gameState.equippedSkin && SKINS[gameState.equippedSkin]) ? SKINS[gameState.equippedSkin].multiplier : 1;
-            }
-
-            function getPrestigePowerMultiplier() {
-                return Math.pow(10, gameState.prestigeLevel);
-            }
-
-            function getPrestigeAdd() {
-                return gameState.prestigeLevel * 2;
-            }
-
-            function getClickPower() {
-                let base = 1;
-                for (const [bonus, count] of Object.entries(gameState.clickItems)) {
-                    base += parseInt(bonus) * count;
+    function gachaRoll(times=1, shinyCard=false){
+        if(shinyCard && game.shinyCards<1) return alert('Không có Card Shiny!');
+        let cost = shinyCard?0:times*25;
+        if(!shinyCard && game.coins<cost) return alert(`Cần ${cost} xu!`);
+        if(!shinyCard) game.coins-=cost; else game.shinyCards--;
+        let tShards=0, tNShards=0, tRefund=0;
+        let newSkins=[], shinySkins=[];
+        for(let i=0;i<times;i++){
+            let rand=Math.random()*100; let won=null;
+            if(rand<0.0001) won='👑'; else if(rand<0.0003) won='🔮'; else if(rand<0.0006) won='💠';
+            if(won && LIMITED[won]){
+                if(Math.random() < 1/(1500*1e21)){
+                    let shiny = LIMITED[won].shiny;
+                    if(shiny && !game.owned.includes(shiny)){ game.owned.push(shiny); shinySkins.push(shiny); continue; }
                 }
-                return Math.floor(base * getPrestigePowerMultiplier() * getSkinMultiplier()) + getPrestigeAdd();
-            }
-
-            function getPassiveIncome() {
-                let base = 0;
-                for (const [bonus, count] of Object.entries(gameState.passiveItems)) {
-                    base += parseInt(bonus) * count;
-                }
-                return Math.floor(base * getPrestigePowerMultiplier() * getSkinMultiplier()) + getPrestigeAdd();
-            }
-
-            function getItemPrice(baseBonus, owned) {
-                let multiplier, growth;
-                if (baseBonus >= PRICE_THRESHOLD_HIGH) {
-                    multiplier = PRICE_MULTIPLIER_HIGH;
-                    growth = PRICE_GROWTH_HIGH;
-                } else if (baseBonus >= PRICE_THRESHOLD_MID) {
-                    multiplier = PRICE_MULTIPLIER_MID;
-                    growth = PRICE_GROWTH_MID;
+                let sg = Math.floor(Math.random()*2)+1; game.shards+=sg; tShards+=sg;
+            } else {
+                if(Math.random()<0.01){
+                    let tier=Math.floor(Math.random()*3);
+                    let pool=Object.entries(SKINS).filter(([_,d])=>d.rarity===(tier===0?'epic':tier===1?'mythical':'god'));
+                    if(pool.length) won=pool[Math.floor(Math.random()*pool.length)][0];
+                } else if(Math.random()<0.055){
+                    let all=Object.entries(SKINS).filter(([_,d])=>!d.def);
+                    won=all[Math.floor(Math.random()*all.length)][0];
+                    if(LIMITED[won]?.shiny && !game.owned.includes(LIMITED[won].shiny)){ game.owned.push(LIMITED[won].shiny); shinySkins.push(LIMITED[won].shiny); continue; }
                 } else {
-                    multiplier = PRICE_MULTIPLIER_LOW;
-                    growth = PRICE_GROWTH_LOW;
+                    let ns=Math.floor(Math.random()*2)+1; game.nshards+=ns; tNShards+=ns;
                 }
-                return Math.floor(baseBonus * multiplier * Math.pow(4, gameState.prestigeLevel) * Math.pow(growth, owned));
-            }
-
-            function formatNumber(num) {
-                if (!isFinite(num)) return '∞';
-                if (num < 0) return '-' + formatNumber(-num);
-                if (num < 1000) return Math.floor(num).toString();
-                return Math.floor(num).toLocaleString('vi-VN');
-            }
-
-            function formatShort(num) {
-                if (!isFinite(num)) return '∞';
-                if (num < 1000) return Math.floor(num).toString();
-                const units = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
-                let n = num;
-                let idx = 0;
-                while (n >= 1000 && idx < units.length - 1) {
-                    n /= 1000;
-                    idx++;
+                if(won){
+                    if(!game.owned.includes(won)){ game.owned.push(won); newSkins.push(won); }
+                    else { let ref=Math.floor(SKINS[won].price/100); game.pts+=ref; tRefund+=ref; }
                 }
-                return (idx === 0) ? Math.floor(n).toString() : n.toFixed(1).replace(/\.0$/, '') + ' ' + units[idx];
             }
+        }
+        let icons='';
+        if(shinySkins.length) icons+='✨ SHINY: '+shinySkins.join(' ')+' ';
+        if(newSkins.length) icons+='🆕 Mới: '+newSkins.join(' ');
+        resultIcons.textContent = icons||'🎁';
+        resultText.innerHTML = `Mảnh limited: +${tShards}<br>Mảnh thường: +${tNShards}<br>Điểm hoàn: +${tRefund}`;
+        modalGachaResult.classList.add('active');
+        updateUI(); save();
+    }
 
-            function formatNumberFlexible(num) {
-                return gameState.showFullNumbers ? formatNumber(num) : formatShort(num);
+    function renderGachaShop(){
+        gachaBody.innerHTML = `
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:6px;"><span>Thẻ x2 20p (10 xu)</span><button id="buyCard">Mua (${game.cardStock.x2})</button></div>
+        <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:6px;"><span>✨ Card Shiny</span><button id="buyShinyCard">Đổi 250T (${game.shinyCards})</button></div>
+        <hr><h3 style="text-align:center;">🔮 Lật thẻ (25 xu/lần)</h3>
+        <div class="gacha-rates"><span>📊 Tỉ lệ:</span><br>• Mảnh thường: <span>~60%</span><br>• Skin thường: <span>~1%</span><br>• Skin Shiny (từ Limited): <span>~5.5%</span><br>• Skin Limited: <span>0.0006%</span><br>• Shiny từ Limited: <span>1/1500 Se</span></div>
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+            <button id="gx1">x1</button><button id="gx10">x10</button>
+            <input type="number" id="customRoll" min="1" max="250" value="1" style="width:60px;">
+            <button id="gxCustom">Quay</button>
+            ${game.shinyCards>0?'<button id="gxShiny" style="background:gold;color:#000;">Quay Shiny</button>':''}
+        </div>`;
+        document.getElementById('buyCard').onclick=()=>{ if(game.coins>=10&&game.cardStock.x2>0){ game.coins-=10; game.cardStock.x2--; game.boosts.push({mul:2,end:Date.now()+1200000}); updateUI(); renderGachaShop(); save(); } };
+        document.getElementById('buyShinyCard').onclick=()=>{ if(game.pts>=250e12){ game.pts-=250e12; game.shinyCards++; updateUI(); renderGachaShop(); save(); } };
+        document.getElementById('gx1').onclick=()=>gachaRoll(1);
+        document.getElementById('gx10').onclick=()=>gachaRoll(10);
+        document.getElementById('gxCustom').onclick=()=>{ let t=parseInt(document.getElementById('customRoll').value)||1; if(t>250)t=250; gachaRoll(t); };
+        let shinyBtn=document.getElementById('gxShiny'); if(shinyBtn) shinyBtn.onclick=()=>gachaRoll(1,true);
+    }
+
+    function renderAccShop(){
+        accBody.innerHTML='';
+        ACCESSORIES.forEach(a=>{
+            let div=document.createElement('div'); div.style.cssText='display:flex;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:4px;';
+            div.innerHTML=`<span>${a.name} x${a.mul}</span><span>💰${fmt(a.price)}</span>`;
+            let btn=document.createElement('button'); btn.textContent=game.accessory===a.name?'Đang dùng':(game.pts>=a.price?'Mua':'Dùng');
+            btn.onclick=()=>{ if(game.accessory===a.name){ game.accessory=null; } else if(game.pts>=a.price||game.owned.includes(a.name)){ if(!game.owned.includes(a.name)){ game.pts-=a.price; game.owned.push(a.name); } game.accessory=a.name; } else alert('Không đủ điểm!'); updateUI(); renderAccShop(); save(); };
+            div.appendChild(btn); accBody.appendChild(div);
+        });
+    }
+
+    function openDebug(){
+        debugConsole.textContent = debugLog.join('\n')||'Sẵn sàng';
+        document.getElementById('modalDebug').classList.add('active');
+    }
+    function execDebug(){
+        let raw = debugInput.value.trim(); if(!raw) return; debugLog.push('> '+raw);
+        let parts = raw.split(' ');
+        if(parts[0]==='/give'&&parts.length>=3){
+            let type=parts[1].toLowerCase(), val=parse(parts[2]+(parts[3]||''));
+            if(isNaN(val)){ debugLog.push('Số không hợp lệ'); }
+            else {
+                switch(type){ case'coin':game.coins+=Math.floor(val);break; case'point':game.pts+=Math.floor(val);break; case'shard':game.shards+=Math.floor(val);break; case'nshard':game.nshards+=Math.floor(val);break; case'shinycard':game.shinyCards+=Math.floor(val);break; default:debugLog.push('Loại không hợp lệ'); }
+                debugLog.push(`Đã thêm ${fmt(val)} ${type}`);
             }
+        } else if(parts[0]==='/give'&&parts.length>=3&&parts[1].toLowerCase()==='skin'){
+            let emoji=parts[2];
+            if(ALL_KEYS.includes(emoji)){ if(!game.owned.includes(emoji))game.owned.push(emoji); game.equipped=emoji; debugLog.push(`Đã cấp ${emoji}`); }
+            else debugLog.push(`Skin ${emoji} không tồn tại`);
+        } else if(parts[0]==='/unlockall'){ for(let k of ALL_KEYS) if(!game.owned.includes(k)) game.owned.push(k); debugLog.push('Đã mở khóa tất cả skin'); renderSkinShop(); }
+        else debugLog.push('Lệnh không hợp lệ');
+        debugConsole.textContent = debugLog.slice(-10).join('\n');
+        debugInput.value=''; updateUI(); save();
+    }
 
-            function formatBonusLabel(bonus) {
-                if (bonus >= 1e15) return '1Qa';
-                if (bonus >= 1e12) return (bonus / 1e12) + 'T';
-                if (bonus >= 1e9) return (bonus / 1e9) + 'B';
-                if (bonus >= 1e6) return (bonus / 1e6) + 'M';
-                return formatShort(bonus);
-            }
+    function save(){ localStorage.setItem('clicker_fix', JSON.stringify(game)); }
+    function load(){ let s=localStorage.getItem('clicker_fix'); if(s){ let d=JSON.parse(s); Object.assign(game,d); game.cardStock=game.cardStock||{x2:0}; game.boosts=game.boosts||[]; game.owned=game.owned||['😶']; game.equipped=game.equipped||'😶'; game.shards=game.shards||0; game.nshards=game.nshards||0; game.accum=game.accum||0; game.shinyCards=game.shinyCards||0; } initItems(); }
 
-            function renderUpgradeButtons() {
-                upgradesWrapper.innerHTML = '';
+    // Events
+    emojiWrap.onclick = ()=>{ game.pts+=getClick(); updateUI(); save(); };
+    prestigeBtn.onclick = prestigeConfirm;
+    confirmPrestigeBtn.onclick = doPrestige;
+    document.querySelector('#modalPrestige .modal-close').onclick = ()=>modalPrestige.classList.remove('active');
+    $('btnSkin').onclick = ()=>{ renderSkinShop(); modalSkin.classList.add('active'); };
+    document.querySelector('#modalSkin .modal-close').onclick = ()=>modalSkin.classList.remove('active');
+    $('btnGacha').onclick = ()=>{ renderGachaShop(); modalGacha.classList.add('active'); };
+    document.querySelector('#modalGacha .modal-close').onclick = ()=>modalGacha.classList.remove('active');
+    $('btnAcc').onclick = ()=>{ renderAccShop(); modalAcc.classList.add('active'); };
+    document.querySelector('#modalAcc .modal-close').onclick = ()=>modalAcc.classList.remove('active');
+    $('btnSettings').onclick = ()=>{ document.getElementById('modalSettings').classList.add('active'); };
+    document.querySelector('#modalSettings .modal-close').onclick = ()=>document.getElementById('modalSettings').classList.remove('active');
+    fullNum.onchange = function(){ game.fullNum = this.checked; updateUI(); save(); };
+    fullNum.checked = game.fullNum;
+    customSkinToggle.onchange = function(){ game.customEnabled = this.checked; updateUI(); save(); };
+    customSkinToggle.checked = game.customEnabled;
+    chooseCustomSkin.onclick = ()=>customSkinFile.click();
+    customSkinFile.onchange = (e)=>{ let file=e.target.files[0]; if(!file)return; let reader=new FileReader(); reader.onload=(ev)=>{ game.customSkin=ev.target.result; game.customEnabled=true; customSkinToggle.checked=true; updateUI(); save(); }; reader.readAsDataURL(file); };
+    document.querySelector('#modalGachaResult .modal-close').onclick = ()=>modalGachaResult.classList.remove('active');
+    debugExec.onclick = execDebug;
+    document.querySelector('#modalDebug .modal-close').onclick = ()=>document.getElementById('modalDebug').classList.remove('active');
+    tabPower.onclick = ()=>setTab('power');
+    tabPassive.onclick = ()=>setTab('passive');
+    coinDis.onclick = ()=>{ let qa=parseFloat(prompt('Nhập số xu muốn đổi (1 xu = 30 Qi điểm):','1'))||1; let cost=qa*30e18; if(game.pts>=cost){ game.pts-=cost; game.coins+=qa; updateUI(); save(); } else alert('Không đủ điểm!'); };
 
-                // Power Category
-                const powerCat = document.createElement('div');
-                powerCat.className = 'upgrade-category';
-                powerCat.id = 'powerCategory';
-                if (activeTab !== 'power') powerCat.classList.add('hidden');
-                powerCat.innerHTML = '<div class="category-title">👆 Power (Click)</div>';
-                const powerGrid = document.createElement('div');
-                powerGrid.className = 'items-grid';
-                CLICK_BONUSES.forEach(b => {
-                    const owned = gameState.clickItems[b] || 0, price = getItemPrice(b, owned);
-                    const btn = document.createElement('button');
-                    btn.className = 'item-btn';
-                    btn.innerHTML = `
-                        <span class="item-bonus">+${formatBonusLabel(b)}</span>
-                        <span class="item-price">💰 ${formatShort(price)}</span>
-                        ${owned>0?`<span class="item-owned">Đã mua: ${owned}</span>`:''}
-                    `;
-                    btn.disabled = gameState.points < price;
-                    btn.addEventListener('click', (e) => { e.preventDefault(); buyClick(b); });
-                    btn.addEventListener('touchend', (e) => { e.preventDefault(); buyClick(b); });
-                    powerGrid.appendChild(btn);
-                });
-                powerCat.appendChild(powerGrid);
-                upgradesWrapper.appendChild(powerCat);
+    setInterval(()=>{
+        let acc = ACCESSORIES.find(a=>a.name===game.accessory);
+        if(acc && Math.random()<0.3) game.shards += Math.floor(acc.level/20)+1;
+        game.boosts = game.boosts.filter(b=>b.end>Date.now());
+        game.pts += getPassive()*2;
+        updateUI(); save();
+    },2000);
+    setInterval(()=>{ game.cardStock.x2 = Math.floor(Math.random()*5)+1; game.lastRestock=Date.now(); },25*60*1000);
 
-                // Passive Category
-                const passiveCat = document.createElement('div');
-                passiveCat.className = 'upgrade-category';
-                passiveCat.id = 'passiveCategory';
-                if (activeTab !== 'passive') passiveCat.classList.add('hidden');
-                passiveCat.innerHTML = '<div class="category-title">⏱️ Thụ động (Passive)</div>';
-                const passiveGrid = document.createElement('div');
-                passiveGrid.className = 'items-grid';
-                PASSIVE_BONUSES.forEach(b => {
-                    const owned = gameState.passiveItems[b] || 0, price = getItemPrice(b, owned);
-                    const btn = document.createElement('button');
-                    btn.className = 'item-btn';
-                    btn.innerHTML = `
-                        <span class="item-bonus">+${formatBonusLabel(b)}/s</span>
-                        <span class="item-price">💰 ${formatShort(price)}</span>
-                        ${owned>0?`<span class="item-owned">Đã mua: ${owned}</span>`:''}
-                    `;
-                    btn.disabled = gameState.points < price;
-                    btn.addEventListener('click', (e) => { e.preventDefault(); buyPassive(b); });
-                    btn.addEventListener('touchend', (e) => { e.preventDefault(); buyPassive(b); });
-                    passiveGrid.appendChild(btn);
-                });
-                passiveCat.appendChild(passiveGrid);
-                upgradesWrapper.appendChild(passiveCat);
-            }
-
-            function updateAllButtons() {
-                document.querySelectorAll('#powerCategory .item-btn').forEach((btn, i) => {
-                    const b = CLICK_BONUSES[i], owned = gameState.clickItems[b] || 0, price = getItemPrice(b, owned);
-                    btn.disabled = gameState.points < price;
-                    btn.querySelector('.item-price').textContent = '💰 ' + formatShort(price);
-                    let os = btn.querySelector('.item-owned');
-                    if (owned > 0) {
-                        if (!os) { os = document.createElement('span'); os.className = 'item-owned'; btn.appendChild(os); }
-                        os.textContent = 'Đã mua: ' + owned;
-                    } else if (os) os.remove();
-                });
-                document.querySelectorAll('#passiveCategory .item-btn').forEach((btn, i) => {
-                    const b = PASSIVE_BONUSES[i], owned = gameState.passiveItems[b] || 0, price = getItemPrice(b, owned);
-                    btn.disabled = gameState.points < price;
-                    btn.querySelector('.item-price').textContent = '💰 ' + formatShort(price);
-                    let os = btn.querySelector('.item-owned');
-                    if (owned > 0) {
-                        if (!os) { os = document.createElement('span'); os.className = 'item-owned'; btn.appendChild(os); }
-                        os.textContent = 'Đã mua: ' + owned;
-                    } else if (os) os.remove();
-                });
-            }
-
-            function updateVisibility() {
-                document.getElementById('powerCategory')?.classList.toggle('hidden', activeTab !== 'power');
-                document.getElementById('passiveCategory')?.classList.toggle('hidden', activeTab !== 'passive');
-                powerBadge.classList.toggle('active-tab', activeTab === 'power');
-                passiveBadge.classList.toggle('active-tab', activeTab === 'passive');
-                powerBadge.querySelector('.toggle-icon').textContent = activeTab === 'power' ? '▼' : '▶';
-                passiveBadge.querySelector('.toggle-icon').textContent = activeTab === 'passive' ? '▼' : '▶';
-            }
-
-            function setActiveTab(tab) { if (activeTab === tab) return; activeTab = tab; updateVisibility(); updateAllButtons(); saveGame(); }
-
-            function updateUI() {
-                scoreDisplay.textContent = formatNumberFlexible(gameState.points);
-                clickPowerDisplay.textContent = formatNumberFlexible(getClickPower());
-                passiveDisplay.textContent = formatNumberFlexible(getPassiveIncome());
-                updateAllButtons();
-                mainEmoji.textContent = gameState.equippedSkin || '😶';
-                const progress = Math.min(1, gameState.points / PRESTIGE_COST);
-                prestigeFill.style.width = (progress * 100) + '%';
-                prestigeBtn.disabled = gameState.points < PRESTIGE_COST;
-                // Cập nhật text prestige bar: hiển thị multiplier hiện tại
-                const mult = getPrestigePowerMultiplier();
-                prestigeText.textContent = `x${formatShort(mult)} 🌟 36T`;
-            }
-
-            function buyClick(bonus) {
-                const owned = gameState.clickItems[bonus] || 0, price = getItemPrice(bonus, owned);
-                if (gameState.points < price) return;
-                gameState.points -= price;
-                gameState.clickItems[bonus] = owned + 1;
-                updateUI(); saveGame();
-            }
-
-            function buyPassive(bonus) {
-                const owned = gameState.passiveItems[bonus] || 0, price = getItemPrice(bonus, owned);
-                if (gameState.points < price) return;
-                gameState.points -= price;
-                gameState.passiveItems[bonus] = owned + 1;
-                updateUI(); saveGame();
-            }
-
-            function handleEmojiClick(e) {
-                const power = getClickPower();
-                gameState.points += power;
-                emojiWrapper.classList.remove('pop'); void emojiWrapper.offsetWidth; emojiWrapper.classList.add('pop');
-                scoreDisplay.classList.remove('pulse'); void scoreDisplay.offsetWidth; scoreDisplay.classList.add('pulse');
-                spawnFloatingText('+' + formatShort(power), e);
-                updateUI(); saveGame();
-            }
-
-            function spawnFloatingText(text, event) {
-                const el = document.createElement('span'); el.className = 'floating-text'; el.textContent = text;
-                const cx = event.clientX || (event.touches?.[0]?.clientX) || window.innerWidth/2;
-                const cy = event.clientY || (event.touches?.[0]?.clientY) || window.innerHeight/2;
-                el.style.left = (cx + (Math.random()-0.5)*50) + 'px';
-                el.style.top = (cy - 35 - Math.random()*20) + 'px';
-                document.body.appendChild(el);
-                el.addEventListener('animationend', () => el.remove());
-                setTimeout(() => { if (el.parentNode) el.remove(); }, 1200);
-            }
-
-            function prestige() {
-                if (gameState.points < PRESTIGE_COST) return;
-                gameState.prestigeLevel++;
-                gameState.points = 0;
-                gameState.clickItems = {};
-                gameState.passiveItems = {};
-                initItems();
-                updateUI();
-                renderUpgradeButtons();
-                updateVisibility();
-                saveGame();
-            }
-
-            function renderSkinShop() {
-                skinGrid.innerHTML = '';
-                // Sắp xếp skin theo multiplier tăng dần
-                const sortedSkins = Object.entries(SKINS)
-                    .filter(([_, data]) => !data.default)
-                    .sort((a, b) => a[1].multiplier - b[1].multiplier);
-
-                sortedSkins.forEach(([emoji, data]) => {
-                    const owned = gameState.ownedSkins.includes(emoji);
-                    const equipped = gameState.equippedSkin === emoji;
-                    const card = document.createElement('div'); card.className = 'skin-card';
-                    card.innerHTML = `
-                        <div class="skin-emoji-large">${emoji}</div>
-                        <div class="skin-name">Skin ${emoji}</div>
-                        <div class="skin-multiplier">x${data.multiplier.toFixed(2)}</div>
-                        ${!owned ? `<span class="skin-price">💰 ${formatShort(data.price)}</span>` : ''}
-                        <button class="skin-action-btn ${!owned ? 'buy' : (equipped ? 'equipped' : 'use')}" data-emoji="${emoji}">
-                            ${!owned ? 'Mua' : (equipped ? 'Gỡ skin' : 'Dùng')}
-                        </button>
-                    `;
-                    skinGrid.appendChild(card);
-                });
-
-                document.querySelectorAll('.skin-action-btn').forEach(btn => {
-                    const emoji = btn.dataset.emoji;
-                    const owned = gameState.ownedSkins.includes(emoji);
-                    const equipped = gameState.equippedSkin === emoji;
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        if (!owned) {
-                            const price = SKINS[emoji].price;
-                            if (gameState.points < price) {
-                                btn.classList.add('shake');
-                                setTimeout(() => btn.classList.remove('shake'), 300);
-                                return;
-                            }
-                            pendingSkinBuy = emoji;
-                            confirmMessage.textContent = `Mua skin ${emoji} với giá ${formatShort(price)}?`;
-                            confirmDialog.classList.add('active');
-                        } else if (!equipped) {
-                            equipSkin(emoji);
-                        } else {
-                            unequipSkin();
-                        }
-                    });
-                    btn.addEventListener('touchend', (e) => {
-                        e.preventDefault();
-                        if (!owned) {
-                            const price = SKINS[emoji].price;
-                            if (gameState.points < price) {
-                                btn.classList.add('shake');
-                                setTimeout(() => btn.classList.remove('shake'), 300);
-                                return;
-                            }
-                            pendingSkinBuy = emoji;
-                            confirmMessage.textContent = `Mua skin ${emoji} với giá ${formatShort(price)}?`;
-                            confirmDialog.classList.add('active');
-                        } else if (!equipped) {
-                            equipSkin(emoji);
-                        } else {
-                            unequipSkin();
-                        }
-                    });
-                });
-            }
-
-            function buySkin(emoji) {
-                if (!SKINS[emoji] || gameState.ownedSkins.includes(emoji)) return;
-                const price = SKINS[emoji].price;
-                if (gameState.points < price) return;
-                gameState.points -= price;
-                gameState.ownedSkins.push(emoji);
-                if (!gameState.equippedSkin || gameState.equippedSkin === '😶') gameState.equippedSkin = emoji;
-                updateUI(); renderSkinShop(); saveGame();
-                pendingSkinBuy = null;
-            }
-
-            function equipSkin(emoji) {
-                if (!gameState.ownedSkins.includes(emoji)) return;
-                gameState.equippedSkin = emoji;
-                updateUI(); renderSkinShop(); saveGame();
-            }
-
-            function unequipSkin() {
-                gameState.equippedSkin = '😶';
-                updateUI(); renderSkinShop(); saveGame();
-            }
-
-            function openSkinShop() { renderSkinShop(); modalOverlay.classList.add('active'); }
-            function closeSkinShop() { modalOverlay.classList.remove('active'); }
-            function openSettings() { settingsModal.classList.add('active'); }
-            function closeSettings() { settingsModal.classList.remove('active'); }
-
-            // Passive income (không còn auto-buy)
-            let tickCount = 0;
-            function passiveTick() {
-                const income = getPassiveIncome();
-                if (income > 0) gameState.points += income;
-                updateUI();
-                tickCount++;
-                if (tickCount >= 5) { tickCount = 0; saveGame(); }
-            }
-
-            function createParticle() {
-                const p = document.createElement('div'); p.className = 'particle';
-                const size = Math.random()*3+1.5; p.style.width = size+'px'; p.style.height = size+'px';
-                p.style.left = Math.random()*100+'%';
-                p.style.animationDuration = (Math.random()*8+7)+'s';
-                p.style.animationDelay = Math.random()*4+'s';
-                p.style.background = `rgba(${200+Math.random()*55},${180+Math.random()*75},${100+Math.random()*155},${0.4+Math.random()*0.5})`;
-                particlesBg.appendChild(p);
-                setTimeout(() => p.remove(), (parseFloat(p.style.animationDuration)+parseFloat(p.style.animationDelay))*1000+600);
-            }
-            function initParticles(n=25) {
-                for (let i=0;i<n;i++) setTimeout(createParticle, Math.random()*2000);
-                setInterval(() => { if (particlesBg.children.length<40) createParticle(); }, 1800);
-            }
-
-            const STORAGE_KEY = 'emoji_ultimate_v4';
-            function saveGame() {
-                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState)); } catch(e) {}
-            }
-            function loadGame() {
-                try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
-                    if (saved) {
-                        const d = JSON.parse(saved);
-                        if (typeof d.points === 'number') gameState.points = Math.max(0, d.points);
-                        if (d.clickItems) for (const [k,v] of Object.entries(d.clickItems)) gameState.clickItems[k] = Math.max(0, v||0);
-                        if (d.passiveItems) for (const [k,v] of Object.entries(d.passiveItems)) gameState.passiveItems[k] = Math.max(0, v||0);
-                        if (Array.isArray(d.ownedSkins)) gameState.ownedSkins = d.ownedSkins.filter(s => SKINS[s]);
-                        else gameState.ownedSkins = ['😶'];
-                        if (!gameState.ownedSkins.includes('😶')) gameState.ownedSkins.unshift('😶');
-                        if (d.equippedSkin && SKINS[d.equippedSkin] && gameState.ownedSkins.includes(d.equippedSkin)) gameState.equippedSkin = d.equippedSkin;
-                        else gameState.equippedSkin = '😶';
-                        if (typeof d.prestigeLevel === 'number') gameState.prestigeLevel = Math.max(0, d.prestigeLevel);
-                        if (typeof d.showFullNumbers === 'boolean') gameState.showFullNumbers = d.showFullNumbers;
-                        if (d.activeTab && ['power','passive'].includes(d.activeTab)) activeTab = d.activeTab;
-                    }
-                } catch(e) {}
-                initItems();
-                toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-            }
-
-            let clickLock = false;
-            emojiWrapper.addEventListener('click', (e) => { if(clickLock) return; handleEmojiClick(e); });
-            emojiWrapper.addEventListener('touchend', (e) => { e.preventDefault(); if(clickLock) return; clickLock=true; handleEmojiClick(e); setTimeout(()=>{clickLock=false;},150); });
-
-            powerBadge.addEventListener('click', (e) => { e.preventDefault(); setActiveTab('power'); });
-            powerBadge.addEventListener('touchend', (e) => { e.preventDefault(); setActiveTab('power'); });
-            passiveBadge.addEventListener('click', (e) => { e.preventDefault(); setActiveTab('passive'); });
-            passiveBadge.addEventListener('touchend', (e) => { e.preventDefault(); setActiveTab('passive'); });
-
-            skinButton.addEventListener('click', openSkinShop);
-            skinButton.addEventListener('touchend', (e) => { e.preventDefault(); openSkinShop(); });
-            settingsButton.addEventListener('click', openSettings);
-            settingsButton.addEventListener('touchend', (e) => { e.preventDefault(); openSettings(); });
-
-            modalClose.addEventListener('click', closeSkinShop);
-            modalClose.addEventListener('touchend', (e) => { e.preventDefault(); closeSkinShop(); });
-            modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeSkinShop(); });
-
-            confirmYes.addEventListener('click', () => {
-                if (pendingSkinBuy) buySkin(pendingSkinBuy);
-                confirmDialog.classList.remove('active');
-            });
-            confirmNo.addEventListener('click', () => { pendingSkinBuy = null; confirmDialog.classList.remove('active'); });
-
-            prestigeBtn.addEventListener('click', prestige);
-            prestigeBtn.addEventListener('touchend', (e) => { e.preventDefault(); prestige(); });
-
-            toggleFullNumbers.addEventListener('click', () => {
-                gameState.showFullNumbers = !gameState.showFullNumbers;
-                toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-                updateUI(); saveGame();
-            });
-            closeSettingsBtn.addEventListener('click', closeSettings);
-
-            document.addEventListener('touchstart', (e) => {
-                if (e.target.closest('.emoji-wrapper') || e.target.closest('.stat-badge') || e.target.closest('.skin-button') || e.target.closest('.settings-button') || e.target.closest('.prestige-btn')) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            function init() {
-                initItems(); loadGame(); initItems();
-                renderUpgradeButtons(); updateUI(); updateVisibility();
-                toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-                initParticles();
-                setInterval(passiveTick, 1000);
-            }
-            init();
-        })();
-    </script>
+    function init(){ load(); updateUI(); }
+    init();
+})();
+</script>
 </body>
 </html>
