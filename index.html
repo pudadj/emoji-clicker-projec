@@ -25,11 +25,17 @@
             overflow-x: hidden;
         }
         .particles-bg {
-            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
         }
         .particle {
-            position: absolute; background: white; border-radius: 50%;
-            animation: floatUp linear infinite; opacity: 0;
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
         }
         @keyframes floatUp {
             0% { transform: translateY(105vh) scale(0); opacity: 0; }
@@ -38,847 +44,611 @@
             100% { transform: translateY(-5vh) scale(1.2); opacity: 0; }
         }
         .game-container {
-            position: relative; z-index: 1;
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px); border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.1); padding: 20px 14px 16px;
-            width: 100%; max-width: 420px; max-height: 95vh; overflow-y: auto;
-            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 14px 16px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 95vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
             box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 60px rgba(140,100,255,0.12);
         }
         .top-bar {
-            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .skin-settings-group {
-            display: flex; flex-direction: column; gap: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        .skin-button, .settings-button {
-            background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
-            width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; transition: background 0.2s, transform 0.1s; color: #fff;
+        .skin-button,
+        .settings-button {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            color: #fff;
         }
-        .skin-button:active, .settings-button:active {
-            background: rgba(255,215,0,0.2); transform: scale(0.9);
+        .skin-button:active,
+        .settings-button:active {
+            background: rgba(255,215,0,0.2);
+            transform: scale(0.9);
         }
         .prestige-bar {
-            flex: 1; margin-left: 10px; background: rgba(255,255,255,0.06);
-            border-radius: 20px; height: 36px; display: flex; align-items: center;
-            padding: 0 8px; gap: 6px; border: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.7rem; color: #fff;
+            flex: 1;
+            margin-left: 10px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 20px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.7rem;
+            color: #fff;
         }
         .prestige-fill {
-            height: 6px; background: linear-gradient(90deg, #ffd700, #ff8c00);
-            border-radius: 3px; width: 0%; transition: width 0.3s;
+            height: 6px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s;
         }
-        .prestige-text { white-space: nowrap; font-weight: 600; }
+        .prestige-text {
+            white-space: nowrap;
+            font-weight: 600;
+        }
         .prestige-btn {
-            background: #ff8c00; border: none; border-radius: 14px; padding: 4px 10px;
-            font-weight: 700; font-size: 0.7rem; color: #fff; cursor: pointer; margin-left: 4px; white-space: nowrap;
+            background: #ff8c00;
+            border: none;
+            border-radius: 14px;
+            padding: 4px 10px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 4px;
+            white-space: nowrap;
         }
-        .prestige-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #555; }
+        .prestige-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #555;
+        }
 
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            z-index: 50; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.25s;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
         .modal-content {
-            background: rgba(20,20,45,0.95); backdrop-filter: blur(20px);
-            border-radius: 24px; border: 1px solid rgba(255,255,255,0.15);
-            padding: 0; width: 92%; max-width: 420px; max-height: 80vh;
-            display: flex; flex-direction: column; color: #fff;
+            background: rgba(20,20,45,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0;
+            width: 92%;
+            max-width: 420px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
         }
         .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 16px 10px; position: sticky; top: 0;
-            background: rgba(20,20,45,0.95); backdrop-filter: blur(20px);
-            z-index: 2; border-radius: 24px 24px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 16px 10px;
+            position: sticky;
+            top: 0;
+            background: rgba(20,20,45,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2;
+            border-radius: 24px 24px 0 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .modal-title { font-size: 1.2rem; font-weight: 700; }
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
         .modal-close {
-            background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.8);
-            font-size: 1.4rem; cursor: pointer; padding: 6px 12px; border-radius: 10px;
-            transition: background 0.2s; line-height: 1;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 10px;
+            transition: background 0.2s;
+            line-height: 1;
         }
-        .modal-close:active { background: rgba(255,255,255,0.25); }
-        .modal-body { padding: 16px; overflow-y: auto; flex: 1; }
-        .skin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .modal-close:active {
+            background: rgba(255,255,255,0.25);
+        }
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .skin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
         .skin-card {
-            background: rgba(255,255,255,0.05); border-radius: 16px; padding: 14px 8px;
-            border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column;
-            align-items: center; gap: 8px; text-align: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 14px 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
         }
-        .skin-emoji-large { font-size: 2.5rem; }
-        .skin-name { font-weight: 700; font-size: 0.9rem; }
-        .skin-multiplier { font-size: 0.75rem; color: #ffd700; font-weight: 600; }
-        .skin-price { font-size: 0.7rem; color: #ffeaa7; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 10px; }
+        .skin-emoji-large {
+            font-size: 2.5rem;
+        }
+        .skin-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .skin-multiplier {
+            font-size: 0.75rem;
+            color: #ffd700;
+            font-weight: 600;
+        }
+        .skin-price {
+            font-size: 0.7rem;
+            color: #ffeaa7;
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
         .skin-action-btn {
-            border: none; border-radius: 12px; padding: 8px 14px; font-weight: 700;
-            font-size: 0.8rem; color: #fff; cursor: pointer; margin-top: 4px; width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 4px;
+            width: 100%;
             transition: transform 0.1s, filter 0.2s;
         }
-        .skin-action-btn:active { transform: scale(0.92); }
-        .skin-action-btn.buy { background: linear-gradient(135deg, #ffb347, #ff8c00); }
-        .skin-action-btn.use { background: #2196F3; }
-        .skin-action-btn.unequip { background: #f44336; }
-        .skin-action-btn:disabled { background: #555; cursor: not-allowed; filter: grayscale(30%); }
-        .skin-action-btn.equipped { background: #4caf50; }
-        .shake { animation: shake 0.3s ease-in-out; }
+        .skin-action-btn:active {
+            transform: scale(0.92);
+        }
+        .skin-action-btn.buy {
+            background: linear-gradient(135deg, #ffb347, #ff8c00);
+        }
+        .skin-action-btn.use {
+            background: #2196F3;
+        }
+        .skin-action-btn.unequip {
+            background: #f44336;
+        }
+        .skin-action-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            filter: grayscale(30%);
+        }
+        .skin-action-btn.equipped {
+            background: #4caf50;
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
         @keyframes shake {
-            0%,100% { transform: translateX(0); }
+            0%,
+            100% { transform: translateX(0); }
             25% { transform: translateX(-4px); }
             75% { transform: translateX(4px); }
         }
 
         .confirm-dialog {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.2s;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
         }
-        .confirm-dialog.active { opacity: 1; pointer-events: auto; }
+        .confirm-dialog.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
         .confirm-box {
-            background: rgba(30,30,60,0.95); border-radius: 20px; padding: 20px;
-            border: 1px solid rgba(255,255,255,0.2); text-align: center; color: #fff;
-            max-width: 300px; width: 90%;
+            background: rgba(30,30,60,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            color: #fff;
+            max-width: 300px;
+            width: 90%;
         }
-        .confirm-box p { margin-bottom: 16px; }
-        .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+        .confirm-box p {
+            margin-bottom: 16px;
+        }
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
         .confirm-actions button {
-            padding: 10px 20px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s;
         }
-        .confirm-yes { background: #4caf50; color: #fff; }
-        .confirm-no { background: #f44336; color: #fff; }
+        .confirm-yes {
+            background: #4caf50;
+            color: #fff;
+        }
+        .confirm-no {
+            background: #f44336;
+            color: #fff;
+        }
 
-        .score-section { text-align: center; width: 100%; }
-        .score-label { font-size: 0.8rem; letter-spacing: 3px; color: rgba(255,255,255,0.45); }
-        .score-value {
-            font-size: 2.6rem; font-weight: 800; color: #fff;
-            text-shadow: 0 0 24px rgba(255,215,0,0.7); line-height: 1.1;
-            transition: transform 0.2s; word-break: break-word;
+        .score-section {
+            text-align: center;
+            width: 100%;
         }
-        .score-value.pulse { animation: scorePulse 0.35s ease; }
-        @keyframes scorePulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+        .score-label {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.45);
+        }
+        .score-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 24px rgba(255,215,0,0.7);
+            line-height: 1.1;
+            transition: transform 0.2s;
+            word-break: break-word;
+        }
+        .score-value.pulse {
+            animation: scorePulse 0.35s ease;
+        }
+        @keyframes scorePulse {
+            0%,
+            100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
 
         .emoji-wrapper {
-            position: relative; cursor: pointer; display: flex; justify-content: center; align-items: center;
-            width: 140px; height: 140px; border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
             background: radial-gradient(circle, rgba(255,215,0,0.18) 0%, rgba(255,215,0,0.03) 55%, transparent 68%);
-            transition: transform 0.1s; flex-shrink: 0;
+            transition: transform 0.1s;
+            flex-shrink: 0;
         }
-        .emoji-wrapper:active { transform: scale(0.86); }
-        .emoji-display { font-size: 80px; line-height: 1; pointer-events: none; filter: drop-shadow(0 6px 16px rgba(0,0,0,0.5)); }
-        .emoji-wrapper.pop .emoji-display { animation: emojiPop 0.28s ease; }
-        @keyframes emojiPop { 0%{transform:scale(0.6);} 45%{transform:scale(1.25);} 75%{transform:scale(0.9);} 100%{transform:scale(1);} }
+        .emoji-wrapper:active {
+            transform: scale(0.86);
+        }
+        .emoji-display {
+            font-size: 80px;
+            line-height: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 6px 16px rgba(0,0,0,0.5));
+        }
+        .emoji-wrapper.pop .emoji-display {
+            animation: emojiPop 0.28s ease;
+        }
+        @keyframes emojiPop {
+            0% { transform: scale(0.6); }
+            45% { transform: scale(1.25); }
+            75% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
 
         .floating-text {
-            position: fixed; pointer-events: none; font-weight: 800; font-size: 1.3rem;
-            color: #ffd700; text-shadow: 0 0 14px rgba(255,215,0,0.9);
-            animation: floatAway 1.1s ease-out forwards; white-space: nowrap; z-index: 999;
+            position: fixed;
+            pointer-events: none;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #ffd700;
+            text-shadow: 0 0 14px rgba(255,215,0,0.9);
+            animation: floatAway 1.1s ease-out forwards;
+            white-space: nowrap;
+            z-index: 999;
         }
-        @keyframes floatAway { 0%{opacity:1;transform:translateY(0) scale(0.8);} 25%{opacity:1;transform:translateY(-18px) scale(1.2);} 100%{opacity:0;transform:translateY(-80px) scale(0.6);} }
+        @keyframes floatAway {
+            0% { opacity:1; transform: translateY(0) scale(0.8); }
+            25% { opacity:1; transform: translateY(-18px) scale(1.2); }
+            100% { opacity:0; transform: translateY(-80px) scale(0.6); }
+        }
 
-        .stats-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%; }
+        .stats-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
         .stat-badge {
-            background: rgba(255,255,255,0.06); border-radius: 18px; padding: 8px 12px;
-            font-size: 0.7rem; color: rgba(255,255,255,0.85); font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center;
-            gap: 4px; white-space: nowrap; flex: 1 1 auto; justify-content: center;
-            cursor: pointer; transition: background 0.2s, border-color 0.2s;
+            background: rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
         }
-        .stat-badge:active { background: rgba(255,255,255,0.12); }
-        .stat-badge.active-tab { background: rgba(255,215,0,0.15); border-color: rgba(255,215,0,0.4); box-shadow: 0 0 12px rgba(255,215,0,0.2); }
-        .stat-value { color: #ffd700; font-weight: 700; }
-        .stat-badge .toggle-icon { font-size: 0.65rem; opacity: 0.8; }
+        .stat-badge:active {
+            background: rgba(255,255,255,0.12);
+        }
+        .stat-badge.active-tab {
+            background: rgba(255,215,0,0.15);
+            border-color: rgba(255,215,0,0.4);
+            box-shadow: 0 0 12px rgba(255,215,0,0.2);
+        }
+        .stat-value {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .stat-badge .toggle-icon {
+            font-size: 0.65rem;
+            opacity: 0.8;
+        }
 
-        .upgrades-wrapper { width: 100%; display: flex; flex-direction: column; gap: 14px; }
-        .upgrade-category { background: rgba(255,255,255,0.03); border-radius: 18px; padding: 10px 10px 14px; border: 1px solid rgba(255,255,255,0.08); }
-        .upgrade-category.hidden { display: none; }
-        .category-title { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 1.5px; margin-bottom: 8px; }
-        .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        @media (max-width: 350px) { .items-grid { grid-template-columns: 1fr; } }
+        .upgrades-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .upgrade-category {
+            background: rgba(255,255,255,0.03);
+            border-radius: 18px;
+            padding: 10px 10px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .upgrade-category.hidden {
+            display: none;
+        }
+        .category-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        @media (max-width: 350px) {
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         .item-btn {
             background: linear-gradient(135deg, rgba(255,160,0,0.18), rgba(255,120,0,0.12));
-            border: 1.5px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 12px 10px;
-            color: #fff; font-weight: 700; font-size: 0.8rem; cursor: pointer;
-            transition: all 0.2s; display: flex; flex-direction: column; align-items: center;
-            gap: 4px; text-align: center; min-height: 70px; touch-action: manipulation;
-            position: relative;
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 12px 10px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+            min-height: 70px;
+            touch-action: manipulation;
         }
-        .item-btn:active:not(:disabled) { transform: scale(0.95); background: linear-gradient(135deg, rgba(255,210,0,0.35), rgba(255,150,0,0.25)); }
-        .item-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(30%); }
-        .item-bonus { font-size: 1rem; font-weight: 800; color: #ffd700; }
-        .item-price { font-size: 0.7rem; background: rgba(0,0,0,0.35); padding: 4px 10px; border-radius: 14px; color: #ffeaa7; }
-        .item-owned { font-size: 0.6rem; color: rgba(255,255,255,0.6); }
-        .auto-buy-toggle {
-            position: absolute; bottom: 4px; right: 4px;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px; padding: 2px 6px; font-size: 0.55rem;
-            cursor: pointer; color: #ccc; transition: all 0.2s;
+        .item-btn:active:not(:disabled) {
+            transform: scale(0.95);
+            background: linear-gradient(135deg, rgba(255,210,0,0.35), rgba(255,150,0,0.25));
         }
-        .auto-buy-toggle.active { background: #ffd700; color: #000; border-color: #ffd700; }
+        .item-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(30%);
+        }
+        .item-bonus {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+        .item-price {
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 10px;
+            border-radius: 14px;
+            color: #ffeaa7;
+        }
+        .item-owned {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.6);
+        }
 
         .settings-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 60;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.25s;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
         }
-        .settings-modal.active { opacity: 1; pointer-events: auto; }
+        .settings-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
         .settings-content {
-            background: rgba(20,20,45,0.95); border-radius: 20px; padding: 20px;
-            border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 90%; max-width: 350px;
+            background: rgba(20,20,45,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 90%;
+            max-width: 350px;
         }
-        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
         .toggle-switch {
-            position: relative; width: 48px; height: 26px; background: #555;
-            border-radius: 13px; cursor: pointer; transition: background 0.3s;
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: #555;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        .toggle-switch.active { background: #4caf50; }
+        .toggle-switch.active {
+            background: #4caf50;
+        }
         .toggle-switch::after {
-            content: ''; position: absolute; width: 22px; height: 22px;
-            background: #fff; border-radius: 50%; top: 2px; left: 2px;
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
             transition: transform 0.3s;
         }
-        .toggle-switch.active::after { transform: translateX(22px); }
+        .toggle-switch.active::after {
+            transform: translateX(22px);
+        }
     </style>
 </head>
 <body>
-<div class="particles-bg" id="particlesBg"></div>
+    <div class="particles-bg" id="particlesBg"></div>
 
-<div class="game-container" id="gameContainer">
-    <div class="top-bar">
-        <div class="skin-settings-group">
-            <button class="skin-button" id="skinButton">🎨</button>
-            <button class="settings-button" id="settingsButton">⚙️</button>
-        </div>
-        <div class="prestige-bar">
-            <span class="prestige-text">🌟 36T</span>
-            <div style="flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin:0 6px;">
-                <div class="prestige-fill" id="prestigeFill"></div>
+    <div class="game-container" id="gameContainer">
+        <div class="top-bar">
+            <div class="skin-settings-group">
+                <button class="skin-button" id="skinButton">🎨</button>
+                <button class="settings-button" id="settingsButton">⚙️</button>
             </div>
-            <button class="prestige-btn" id="prestigeBtn" disabled>Tái sinh</button>
+            <div class="prestige-bar">
+                <span class="prestige-text" id="prestigeText">x1 🌟 36T</span>
+                <div style="flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin:0 6px;">
+                    <div class="prestige-fill" id="prestigeFill"></div>
+                </div>
+                <button class="prestige-btn" id="prestigeBtn" disabled>Tái sinh</button>
+            </div>
+        </div>
+
+        <div class="score-section">
+            <div class="score-label">Điểm</div>
+            <div class="score-value" id="scoreDisplay">0</div>
+        </div>
+
+        <div class="emoji-wrapper" id="emojiWrapper">
+            <span class="emoji-display" id="mainEmoji">😶</span>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-badge active-tab" id="powerBadge">
+                <span>👆 Click: <span class="stat-value" id="clickPowerDisplay">1</span></span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="stat-badge" id="passiveBadge">
+                <span>⏱️ Giây: <span class="stat-value" id="passiveDisplay">0</span></span>
+                <span class="toggle-icon">▶</span>
+            </div>
+        </div>
+
+        <div class="upgrades-wrapper" id="upgradesWrapper"></div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">🎨 Shop Skin</span>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="skin-grid" id="skinGrid"></div>
+            </div>
         </div>
     </div>
 
-    <div class="score-section">
-        <div class="score-label">Điểm</div>
-        <div class="score-value" id="scoreDisplay">0</div>
-    </div>
-
-    <div class="emoji-wrapper" id="emojiWrapper">
-        <span class="emoji-display" id="mainEmoji">😶</span>
-    </div>
-
-    <div class="stats-row">
-        <div class="stat-badge active-tab" id="powerBadge">
-            <span>👆 Click: <span class="stat-value" id="clickPowerDisplay">1</span></span>
-            <span class="toggle-icon">▼</span>
-        </div>
-        <div class="stat-badge" id="passiveBadge">
-            <span>⏱️ Giây: <span class="stat-value" id="passiveDisplay">0</span></span>
-            <span class="toggle-icon">▶</span>
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-box">
+            <p id="confirmMessage">Bạn có chắc muốn mua skin này?</p>
+            <div class="confirm-actions">
+                <button class="confirm-yes" id="confirmYes">Có</button>
+                <button class="confirm-no" id="confirmNo">Không</button>
+            </div>
         </div>
     </div>
 
-    <div class="upgrades-wrapper" id="upgradesWrapper"></div>
-</div>
-
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title">🎨 Shop Skin</span>
-            <button class="modal-close" id="modalClose">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="skin-grid" id="skinGrid"></div>
-        </div>
-    </div>
-</div>
-
-<div class="confirm-dialog" id="confirmDialog">
-    <div class="confirm-box">
-        <p id="confirmMessage">Bạn có chắc muốn mua skin này?</p>
-        <div class="confirm-actions">
-            <button class="confirm-yes" id="confirmYes">Có</button>
-            <button class="confirm-no" id="confirmNo">Không</button>
-        </div>
-    </div>
-</div>
-
-<div class="settings-modal" id="settingsModal">
-    <div class="settings-content">
-        <h3 style="margin-bottom:10px;">⚙️ Cài đặt</h3>
-        <div class="settings-item">
-            <span>Hiển thị số đầy đủ</span>
-            <div class="toggle-switch" id="toggleFullNumbers"></div>
-        </div>
-        <button style="margin-top:12px;padding:10px;width:100%;border-radius:12px;border:none;background:#f44336;color:#fff;font-weight:700;cursor:pointer;" id="closeSettings">Đóng</button>
-    </div>
-</div>
-
-<script>
-(function() {
-    // DOM
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const clickPowerDisplay = document.getElementById('clickPowerDisplay');
-    const passiveDisplay = document.getElementById('passiveDisplay');
-    const mainEmoji = document.getElementById('mainEmoji');
-    const emojiWrapper = document.getElementById('emojiWrapper');
-    const upgradesWrapper = document.getElementById('upgradesWrapper');
-    const particlesBg = document.getElementById('particlesBg');
-    const powerBadge = document.getElementById('powerBadge');
-    const passiveBadge = document.getElementById('passiveBadge');
-    const skinButton = document.getElementById('skinButton');
-    const settingsButton = document.getElementById('settingsButton');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalClose = document.getElementById('modalClose');
-    const skinGrid = document.getElementById('skinGrid');
-    const prestigeFill = document.getElementById('prestigeFill');
-    const prestigeBtn = document.getElementById('prestigeBtn');
-    const confirmDialog = document.getElementById('confirmDialog');
-    const confirmMessage = document.getElementById('confirmMessage');
-    const confirmYes = document.getElementById('confirmYes');
-    const confirmNo = document.getElementById('confirmNo');
-    const settingsModal = document.getElementById('settingsModal');
-    const toggleFullNumbers = document.getElementById('toggleFullNumbers');
-    const closeSettingsBtn = document.getElementById('closeSettings');
-
-    // SKINS
-    const SKINS = {
-        '😶': { multiplier: 1.0, price: 0, default: true },
-        '😂': { multiplier: 1.02, price: 25000000 },
-        '😁': { multiplier: 1.2, price: 62500000 },
-        '😍': { multiplier: 1.5, price: 125000000 },
-        '🤩': { multiplier: 2.0, price: 250000000 },
-        '😎': { multiplier: 3.0, price: 1250000000 },
-        '🤑': { multiplier: 5.0, price: 5000000000 },
-        '😊': { multiplier: 1.1, price: 12500000 },
-        '😇': { multiplier: 1.15, price: 18750000 },
-        '🤣': { multiplier: 1.3, price: 75000000 },
-        '😜': { multiplier: 1.8, price: 200000000 },
-        '🤪': { multiplier: 2.5, price: 500000000 },
-        '😈': { multiplier: 4.0, price: 2500000000 },
-        '👽': { multiplier: 6.0, price: 12500000000 },
-        '🤖': { multiplier: 8.0, price: 25000000000 },
-        '👾': { multiplier: 10.0, price: 50000000000 },
-        '🥳': { multiplier: 1.05, price: 15000000 },
-        '😱': { multiplier: 1.25, price: 50000000 },
-        '🤯': { multiplier: 1.35, price: 85000000 },
-        '🥶': { multiplier: 1.45, price: 110000000 },
-        '😤': { multiplier: 1.6, price: 150000000 },
-        '🤗': { multiplier: 1.9, price: 225000000 },
-        '😴': { multiplier: 2.2, price: 350000000 },
-        '🤓': { multiplier: 2.8, price: 700000000 },
-        '😷': { multiplier: 3.5, price: 1500000000 },
-        '🥴': { multiplier: 4.5, price: 3500000000 },
-        '🤠': { multiplier: 5.5, price: 7500000000 },
-        '👻': { multiplier: 7.0, price: 17500000000 },
-        '💀': { multiplier: 9.0, price: 35000000000 },
-        '🎃': { multiplier: 11.0, price: 65000000000 },
-        '👹': { multiplier: 13.0, price: 100000000000 },
-        '👺': { multiplier: 15.0, price: 150000000000 },
-        '🦊': { multiplier: 3.2, price: 1000000000 },
-        '🐼': { multiplier: 3.8, price: 2000000000 },
-        '🦄': { multiplier: 7.5, price: 20000000000 },
-        '🐉': { multiplier: 12.0, price: 80000000000 },
-        '💎': { multiplier: 16.0, price: 180000000000 },
-        '🔥': { multiplier: 20.0, price: 300000000000 },
-        '🌟': { multiplier: 25.0, price: 500000000000 }
-    };
-
-    const CLICK_BONUSES = [1,10,100,1000,10000,100000,1000000,10000000,100000000,1000000000];
-    const PASSIVE_BONUSES = [1,10,100,1000,10000,100000,1000000,10000000,100000000,1000000000];
-    const PRICE_MULTIPLIER_LOW = 50;
-    const PRICE_MULTIPLIER_HIGH = 20;  // Đã sửa thành 20
-    const PRICE_THRESHOLD = 10000;
-    const PRICE_GROWTH_LOW = 1.5;
-    const PRICE_GROWTH_HIGH = 8;
-    const PRESTIGE_COST = 36e15;
-
-    let gameState = {
-        points: 0,
-        clickItems: {},
-        passiveItems: {},
-        ownedSkins: ['😶'],
-        equippedSkin: '😶',
-        prestigeLevel: 0,
-        autoBuy: {},
-        showFullNumbers: false
-    };
-
-    function initItems() {
-        CLICK_BONUSES.forEach(b => { if (!(b in gameState.clickItems)) gameState.clickItems[b] = 0; });
-        PASSIVE_BONUSES.forEach(b => { if (!(b in gameState.passiveItems)) gameState.passiveItems[b] = 0; });
-    }
-
-    let activeTab = 'power';
-    let pendingSkinBuy = null;
-
-    function getSkinMultiplier() {
-        return (gameState.equippedSkin && SKINS[gameState.equippedSkin]) ? SKINS[gameState.equippedSkin].multiplier : 1;
-    }
-
-    function getPrestigePowerMultiplier() {
-        return Math.pow(10, gameState.prestigeLevel);
-    }
-
-    function getPrestigeAdd() {
-        return gameState.prestigeLevel * 2;
-    }
-
-    function getClickPower() {
-        let base = 1;
-        for (const [bonus, count] of Object.entries(gameState.clickItems)) {
-            base += parseInt(bonus) * count;
-        }
-        return Math.floor(base * getPrestigePowerMultiplier() * getSkinMultiplier()) + getPrestigeAdd();
-    }
-
-    function getPassiveIncome() {
-        let base = 0;
-        for (const [bonus, count] of Object.entries(gameState.passiveItems)) {
-            base += parseInt(bonus) * count;
-        }
-        return Math.floor(base * getPrestigePowerMultiplier() * getSkinMultiplier()) + getPrestigeAdd();
-    }
-
-    function getItemPrice(baseBonus, owned) {
-        const multiplier = baseBonus >= PRICE_THRESHOLD ? PRICE_MULTIPLIER_HIGH : PRICE_MULTIPLIER_LOW;
-        const growth = baseBonus >= PRICE_THRESHOLD ? PRICE_GROWTH_HIGH : PRICE_GROWTH_LOW;
-        return Math.floor(baseBonus * multiplier * Math.pow(4, gameState.prestigeLevel) * Math.pow(growth, owned));
-    }
-
-    function formatNumber(num) {
-        if (!isFinite(num)) return '∞';
-        if (num < 0) return '-' + formatNumber(-num);
-        if (num < 1000) return Math.floor(num).toString();
-        return Math.floor(num).toLocaleString('vi-VN');
-    }
-
-    function formatShort(num) {
-        if (!isFinite(num)) return '∞';
-        if (num < 1000) return Math.floor(num).toString();
-        const units = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
-        let n = num;
-        let idx = 0;
-        while (n >= 1000 && idx < units.length - 1) {
-            n /= 1000;
-            idx++;
-        }
-        return (idx === 0) ? Math.floor(n).toString() : n.toFixed(1).replace(/\.0$/, '') + ' ' + units[idx];
-    }
-
-    function formatNumberFlexible(num) {
-        return gameState.showFullNumbers ? formatNumber(num) : formatShort(num);
-    }
-
-    function formatBonusLabel(bonus) {
-        if (bonus >= 1e9) return (bonus / 1e9) + 'B';
-        if (bonus >= 1e6) return (bonus / 1e6) + 'M';
-        return formatShort(bonus);
-    }
-
-    function renderUpgradeButtons() {
-        upgradesWrapper.innerHTML = '';
-
-        // Power
-        const powerCat = document.createElement('div');
-        powerCat.className = 'upgrade-category';
-        powerCat.id = 'powerCategory';
-        if (activeTab !== 'power') powerCat.classList.add('hidden');
-        powerCat.innerHTML = '<div class="category-title">👆 Power (Click)</div>';
-        const powerGrid = document.createElement('div');
-        powerGrid.className = 'items-grid';
-        CLICK_BONUSES.forEach(b => {
-            const owned = gameState.clickItems[b] || 0, price = getItemPrice(b, owned);
-            const btn = document.createElement('button');
-            btn.className = 'item-btn';
-            btn.innerHTML = `
-                <span class="item-bonus">+${formatBonusLabel(b)}</span>
-                <span class="item-price">💰 ${formatShort(price)}</span>
-                ${owned>0?`<span class="item-owned">Đã mua: ${owned}</span>`:''}
-            `;
-            btn.disabled = gameState.points < price;
-            btn.addEventListener('click', (e) => { e.preventDefault(); buyClick(b); });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); buyClick(b); });
-
-            const autoToggle = document.createElement('div');
-            autoToggle.className = 'auto-buy-toggle';
-            const key = 'click_' + b;
-            if (gameState.autoBuy[key]) autoToggle.classList.add('active');
-            autoToggle.textContent = 'AB';
-            autoToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                gameState.autoBuy[key] = !gameState.autoBuy[key];
-                autoToggle.classList.toggle('active', gameState.autoBuy[key]);
-                saveGame();
-            });
-            autoToggle.addEventListener('touchend', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                gameState.autoBuy[key] = !gameState.autoBuy[key];
-                autoToggle.classList.toggle('active', gameState.autoBuy[key]);
-                saveGame();
-            });
-            btn.appendChild(autoToggle);
-            powerGrid.appendChild(btn);
-        });
-        powerCat.appendChild(powerGrid);
-        upgradesWrapper.appendChild(powerCat);
-
-        // Passive
-        const passiveCat = document.createElement('div');
-        passiveCat.className = 'upgrade-category';
-        passiveCat.id = 'passiveCategory';
-        if (activeTab !== 'passive') passiveCat.classList.add('hidden');
-        passiveCat.innerHTML = '<div class="category-title">⏱️ Thụ động (Passive)</div>';
-        const passiveGrid = document.createElement('div');
-        passiveGrid.className = 'items-grid';
-        PASSIVE_BONUSES.forEach(b => {
-            const owned = gameState.passiveItems[b] || 0, price = getItemPrice(b, owned);
-            const btn = document.createElement('button');
-            btn.className = 'item-btn';
-            btn.innerHTML = `
-                <span class="item-bonus">+${formatBonusLabel(b)}/s</span>
-                <span class="item-price">💰 ${formatShort(price)}</span>
-                ${owned>0?`<span class="item-owned">Đã mua: ${owned}</span>`:''}
-            `;
-            btn.disabled = gameState.points < price;
-            btn.addEventListener('click', (e) => { e.preventDefault(); buyPassive(b); });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); buyPassive(b); });
-
-            const autoToggle = document.createElement('div');
-            autoToggle.className = 'auto-buy-toggle';
-            const key = 'passive_' + b;
-            if (gameState.autoBuy[key]) autoToggle.classList.add('active');
-            autoToggle.textContent = 'AB';
-            autoToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                gameState.autoBuy[key] = !gameState.autoBuy[key];
-                autoToggle.classList.toggle('active', gameState.autoBuy[key]);
-                saveGame();
-            });
-            autoToggle.addEventListener('touchend', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                gameState.autoBuy[key] = !gameState.autoBuy[key];
-                autoToggle.classList.toggle('active', gameState.autoBuy[key]);
-                saveGame();
-            });
-            btn.appendChild(autoToggle);
-            passiveGrid.appendChild(btn);
-        });
-        passiveCat.appendChild(passiveGrid);
-        upgradesWrapper.appendChild(passiveCat);
-    }
-
-    function updateAllButtons() {
-        document.querySelectorAll('#powerCategory .item-btn').forEach((btn, i) => {
-            const b = CLICK_BONUSES[i], owned = gameState.clickItems[b] || 0, price = getItemPrice(b, owned);
-            btn.disabled = gameState.points < price;
-            btn.querySelector('.item-price').textContent = '💰 ' + formatShort(price);
-            let os = btn.querySelector('.item-owned');
-            if (owned > 0) {
-                if (!os) { os = document.createElement('span'); os.className = 'item-owned'; btn.insertBefore(os, btn.querySelector('.auto-buy-toggle')); }
-                os.textContent = 'Đã mua: ' + owned;
-            } else if (os) os.remove();
-        });
-        document.querySelectorAll('#passiveCategory .item-btn').forEach((btn, i) => {
-            const b = PASSIVE_BONUSES[i], owned = gameState.passiveItems[b] || 0, price = getItemPrice(b, owned);
-            btn.disabled = gameState.points < price;
-            btn.querySelector('.item-price').textContent = '💰 ' + formatShort(price);
-            let os = btn.querySelector('.item-owned');
-            if (owned > 0) {
-                if (!os) { os = document.createElement('span'); os.className = 'item-owned'; btn.insertBefore(os, btn.querySelector('.auto-buy-toggle')); }
-                os.textContent = 'Đã mua: ' + owned;
-            } else if (os) os.remove();
-        });
-    }
-
-    function updateVisibility() {
-        document.getElementById('powerCategory')?.classList.toggle('hidden', activeTab !== 'power');
-        document.getElementById('passiveCategory')?.classList.toggle('hidden', activeTab !== 'passive');
-        powerBadge.classList.toggle('active-tab', activeTab === 'power');
-        passiveBadge.classList.toggle('active-tab', activeTab === 'passive');
-        powerBadge.querySelector('.toggle-icon').textContent = activeTab === 'power' ? '▼' : '▶';
-        passiveBadge.querySelector('.toggle-icon').textContent = activeTab === 'passive' ? '▼' : '▶';
-    }
-
-    function setActiveTab(tab) { if (activeTab === tab) return; activeTab = tab; updateVisibility(); updateAllButtons(); saveGame(); }
-
-    function updateUI() {
-        scoreDisplay.textContent = formatNumberFlexible(gameState.points);
-        clickPowerDisplay.textContent = formatNumberFlexible(getClickPower());
-        passiveDisplay.textContent = formatNumberFlexible(getPassiveIncome());
-        updateAllButtons();
-        mainEmoji.textContent = gameState.equippedSkin || '😶';
-        const progress = Math.min(1, gameState.points / PRESTIGE_COST);
-        prestigeFill.style.width = (progress * 100) + '%';
-        prestigeBtn.disabled = gameState.points < PRESTIGE_COST;
-    }
-
-    function buyClick(bonus) {
-        const owned = gameState.clickItems[bonus] || 0, price = getItemPrice(bonus, owned);
-        if (gameState.points < price) return;
-        gameState.points -= price;
-        gameState.clickItems[bonus] = owned + 1;
-        updateUI(); saveGame();
-    }
-
-    function buyPassive(bonus) {
-        const owned = gameState.passiveItems[bonus] || 0, price = getItemPrice(bonus, owned);
-        if (gameState.points < price) return;
-        gameState.points -= price;
-        gameState.passiveItems[bonus] = owned + 1;
-        updateUI(); saveGame();
-    }
-
-    function handleEmojiClick(e) {
-        const power = getClickPower();
-        gameState.points += power;
-        emojiWrapper.classList.remove('pop'); void emojiWrapper.offsetWidth; emojiWrapper.classList.add('pop');
-        scoreDisplay.classList.remove('pulse'); void scoreDisplay.offsetWidth; scoreDisplay.classList.add('pulse');
-        spawnFloatingText('+' + formatShort(power), e);
-        updateUI(); saveGame();
-    }
-
-    function spawnFloatingText(text, event) {
-        const el = document.createElement('span'); el.className = 'floating-text'; el.textContent = text;
-        const cx = event.clientX || (event.touches?.[0]?.clientX) || window.innerWidth/2;
-        const cy = event.clientY || (event.touches?.[0]?.clientY) || window.innerHeight/2;
-        el.style.left = (cx + (Math.random()-0.5)*50) + 'px';
-        el.style.top = (cy - 35 - Math.random()*20) + 'px';
-        document.body.appendChild(el);
-        el.addEventListener('animationend', () => el.remove());
-        setTimeout(() => { if (el.parentNode) el.remove(); }, 1200);
-    }
-
-    function prestige() {
-        if (gameState.points < PRESTIGE_COST) return;
-        gameState.prestigeLevel++;
-        gameState.points = 0;
-        gameState.clickItems = {}; gameState.passiveItems = {};
-        initItems();
-        updateUI(); renderUpgradeButtons(); updateVisibility(); saveGame();
-    }
-
-    function renderSkinShop() {
-        skinGrid.innerHTML = '';
-        Object.entries(SKINS).forEach(([emoji, data]) => {
-            if (data.default) return;
-            const owned = gameState.ownedSkins.includes(emoji);
-            const equipped = gameState.equippedSkin === emoji;
-            const card = document.createElement('div'); card.className = 'skin-card';
-            card.innerHTML = `
-                <div class="skin-emoji-large">${emoji}</div>
-                <div class="skin-name">Skin ${emoji}</div>
-                <div class="skin-multiplier">x${data.multiplier.toFixed(2)}</div>
-                ${!owned ? `<span class="skin-price">💰 ${formatShort(data.price)}</span>` : ''}
-                <button class="skin-action-btn ${!owned ? 'buy' : (equipped ? 'equipped' : 'use')}" data-emoji="${emoji}">
-                    ${!owned ? 'Mua' : (equipped ? 'Gỡ skin' : 'Dùng')}
-                </button>
-            `;
-            skinGrid.appendChild(card);
-        });
-
-        document.querySelectorAll('.skin-action-btn').forEach(btn => {
-            const emoji = btn.dataset.emoji;
-            const owned = gameState.ownedSkins.includes(emoji);
-            const equipped = gameState.equippedSkin === emoji;
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!owned) {
-                    const price = SKINS[emoji].price;
-                    if (gameState.points < price) {
-                        btn.classList.add('shake');
-                        setTimeout(() => btn.classList.remove('shake'), 300);
-                        return;
-                    }
-                    pendingSkinBuy = emoji;
-                    confirmMessage.textContent = `Mua skin ${emoji} với giá ${formatShort(price)}?`;
-                    confirmDialog.classList.add('active');
-                } else if (!equipped) {
-                    equipSkin(emoji);
-                } else {
-                    unequipSkin();
-                }
-            });
-            btn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                if (!owned) {
-                    const price = SKINS[emoji].price;
-                    if (gameState.points < price) {
-                        btn.classList.add('shake');
-                        setTimeout(() => btn.classList.remove('shake'), 300);
-                        return;
-                    }
-                    pendingSkinBuy = emoji;
-                    confirmMessage.textContent = `Mua skin ${emoji} với giá ${formatShort(price)}?`;
-                    confirmDialog.classList.add('active');
-                } else if (!equipped) {
-                    equipSkin(emoji);
-                } else {
-                    unequipSkin();
-                }
-            });
-        });
-    }
-
-    function buySkin(emoji) {
-        if (!SKINS[emoji] || gameState.ownedSkins.includes(emoji)) return;
-        const price = SKINS[emoji].price;
-        if (gameState.points < price) return;
-        gameState.points -= price;
-        gameState.ownedSkins.push(emoji);
-        if (!gameState.equippedSkin || gameState.equippedSkin === '😶') gameState.equippedSkin = emoji;
-        updateUI(); renderSkinShop(); saveGame();
-        pendingSkinBuy = null;
-    }
-
-    function equipSkin(emoji) {
-        if (!gameState.ownedSkins.includes(emoji)) return;
-        gameState.equippedSkin = emoji;
-        updateUI(); renderSkinShop(); saveGame();
-    }
-
-    function unequipSkin() {
-        gameState.equippedSkin = '😶';
-        updateUI(); renderSkinShop(); saveGame();
-    }
-
-    function openSkinShop() { renderSkinShop(); modalOverlay.classList.add('active'); }
-    function closeSkinShop() { modalOverlay.classList.remove('active'); }
-    function openSettings() { settingsModal.classList.add('active'); }
-    function closeSettings() { settingsModal.classList.remove('active'); }
-
-    function processAutoBuy() {
-        CLICK_BONUSES.forEach(b => {
-            const key = 'click_' + b;
-            if (gameState.autoBuy[key]) {
-                const owned = gameState.clickItems[b] || 0, price = getItemPrice(b, owned);
-                if (gameState.points >= price) {
-                    gameState.points -= price;
-                    gameState.clickItems[b] = owned + 1;
-                }
-            }
-        });
-        PASSIVE_BONUSES.forEach(b => {
-            const key = 'passive_' + b;
-            if (gameState.autoBuy[key]) {
-                const owned = gameState.passiveItems[b] || 0, price = getItemPrice(b, owned);
-                if (gameState.points >= price) {
-                    gameState.points -= price;
-                    gameState.passiveItems[b] = owned + 1;
-                }
-            }
-        });
-        updateUI();
-    }
-
-    let tickCount = 0;
-    function passiveTick() {
-        const income = getPassiveIncome();
-        if (income > 0) gameState.points += income;
-        processAutoBuy();
-        updateUI();
-        tickCount++;
-        if (tickCount >= 5) { tickCount = 0; saveGame(); }
-    }
-
-    function createParticle() {
-        const p = document.createElement('div'); p.className = 'particle';
-        const size = Math.random()*3+1.5; p.style.width = size+'px'; p.style.height = size+'px';
-        p.style.left = Math.random()*100+'%';
-        p.style.animationDuration = (Math.random()*8+7)+'s';
-        p.style.animationDelay = Math.random()*4+'s';
-        p.style.background = `rgba(${200+Math.random()*55},${180+Math.random()*75},${100+Math.random()*155},${0.4+Math.random()*0.5})`;
-        particlesBg.appendChild(p);
-        setTimeout(() => p.remove(), (parseFloat(p.style.animationDuration)+parseFloat(p.style.animationDelay))*1000+600);
-    }
-    function initParticles(n=25) {
-        for (let i=0;i<n;i++) setTimeout(createParticle, Math.random()*2000);
-        setInterval(() => { if (particlesBg.children.length<40) createParticle(); }, 1800);
-    }
-
-    const STORAGE_KEY = 'emoji_ultimate_v3';
-    function saveGame() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState)); } catch(e) {}
-    }
-    function loadGame() {
-        try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const d = JSON.parse(saved);
-                if (typeof d.points === 'number') gameState.points = Math.max(0, d.points);
-                if (d.clickItems) for (const [k,v] of Object.entries(d.clickItems)) gameState.clickItems[k] = Math.max(0, v||0);
-                if (d.passiveItems) for (const [k,v] of Object.entries(d.passiveItems)) gameState.passiveItems[k] = Math.max(0, v||0);
-                if (Array.isArray(d.ownedSkins)) gameState.ownedSkins = d.ownedSkins.filter(s => SKINS[s]);
-                else gameState.ownedSkins = ['😶'];
-                if (!gameState.ownedSkins.includes('😶')) gameState.ownedSkins.unshift('😶');
-                if (d.equippedSkin && SKINS[d.equippedSkin] && gameState.ownedSkins.includes(d.equippedSkin)) gameState.equippedSkin = d.equippedSkin;
-                else gameState.equippedSkin = '😶';
-                if (typeof d.prestigeLevel === 'number') gameState.prestigeLevel = Math.max(0, d.prestigeLevel);
-                if (d.autoBuy) gameState.autoBuy = d.autoBuy;
-                if (typeof d.showFullNumbers === 'boolean') gameState.showFullNumbers = d.showFullNumbers;
-                if (d.activeTab && ['power','passive'].includes(d.activeTab)) activeTab = d.activeTab;
-            }
-        } catch(e) {}
-        initItems();
-        toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-    }
-
-    let clickLock = false;
-    emojiWrapper.addEventListener('click', (e) => { if(clickLock) return; handleEmojiClick(e); });
-    emojiWrapper.addEventListener('touchend', (e) => { e.preventDefault(); if(clickLock) return; clickLock=true; handleEmojiClick(e); setTimeout(()=>{clickLock=false;},150); });
-
-    powerBadge.addEventListener('click', (e) => { e.preventDefault(); setActiveTab('power'); });
-    powerBadge.addEventListener('touchend', (e) => { e.preventDefault(); setActiveTab('power'); });
-    passiveBadge.addEventListener('click', (e) => { e.preventDefault(); setActiveTab('passive'); });
-    passiveBadge.addEventListener('touchend', (e) => { e.preventDefault(); setActiveTab('passive'); });
-
-    skinButton.addEventListener('click', openSkinShop);
-    skinButton.addEventListener('touchend', (e) => { e.preventDefault(); openSkinShop(); });
-    settingsButton.addEventListener('click', openSettings);
-    settingsButton.addEventListener('touchend', (e) => { e.preventDefault(); openSettings(); });
-
-    modalClose.addEventListener('click', closeSkinShop);
-    modalClose.addEventListener('touchend', (e) => { e.preventDefault(); closeSkinShop(); });
-    modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeSkinShop(); });
-
-    confirmYes.addEventListener('click', () => {
-        if (pendingSkinBuy) buySkin(pendingSkinBuy);
-        confirmDialog.classList.remove('active');
-    });
-    confirmNo.addEventListener('click', () => { pendingSkinBuy = null; confirmDialog.classList.remove('active'); });
-
-    prestigeBtn.addEventListener('click', prestige);
-    prestigeBtn.addEventListener('touchend', (e) => { e.preventDefault(); prestige(); });
-
-    toggleFullNumbers.addEventListener('click', () => {
-        gameState.showFullNumbers = !gameState.showFullNumbers;
-        toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-        updateUI(); saveGame();
-    });
-    closeSettingsBtn.addEventListener('click', closeSettings);
-
-    document.addEventListener('touchstart', (e) => {
-        if (e.target.closest('.emoji-wrapper') || e.target.closest('.stat-badge') || e.target.closest('.skin-button') || e.target.closest('.settings-button') || e.target.closest('.prestige-btn') || e.target.closest('.auto-buy-toggle')) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    function init() {
-        initItems(); loadGame(); initItems();
-        renderUpgradeButtons(); updateUI(); updateVisibility();
-        toggleFullNumbers.classList.toggle('active', gameState.showFullNumbers);
-        initParticles();
-        setInterval(passiveTick, 1000);
-    }
-    init();
-})();
-</script>
-</body>
-</html>
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h3 style="margin-bottom:10px;">⚙️ Cài đặt</h3>
+            <div class="settings-item">
+                <
